@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.control.RadioButton?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Text?>
+
+<BorderPane xmlns="http://javafx.com/javafx/8.0.112" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sls.RegistrationController">
+    <center>
+<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="284.0" prefWidth="375.0" BorderPane.alignment="CENTER" xmlns="http://javafx.com/javafx/8.0.60" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <HBox prefHeight="92.0" prefWidth="200.0">
+         <children>
+            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Username" wrappingWidth="77.291015625" />
+                  <Pane prefHeight="0.0" prefWidth="10.0" HBox.hgrow="ALWAYS" />
+            <TextField />
+         </children>
+      </HBox>
+      <HBox prefHeight="92.0" prefWidth="200.0">
+         <children>
+            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Email address" />
+                  <Pane prefHeight="0.0" prefWidth="10.0" HBox.hgrow="ALWAYS" />
+            <TextField />
+         </children>
+      </HBox>
+      <HBox prefHeight="92.0" prefWidth="200.0">
+         <children>
+            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Password" />
+                  <Pane prefHeight="0.0" prefWidth="10.0" HBox.hgrow="ALWAYS" />
+            <PasswordField />
+         </children>
+      </HBox>
+      <HBox prefHeight="92.0" prefWidth="200.0">
+         <children>
+            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Confirm password" />
+                  <Pane prefHeight="0.0" prefWidth="10.0" HBox.hgrow="ALWAYS" />
+            <PasswordField />
+         </children>
+      </HBox>
+      <RadioButton mnemonicParsing="false" text="Use my existing Breeze card">
+               <VBox.margin>
+                  <Insets bottom="10.0" top="10.0" />
+               </VBox.margin></RadioButton>
+      <HBox prefHeight="92.0" prefWidth="200.0">
+         <children>
+            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Card Number" />
+                  <Pane prefHeight="0.0" prefWidth="10.0" HBox.hgrow="ALWAYS" />
+            <TextField />
+         </children>
+      </HBox>
+      <RadioButton mnemonicParsing="false" text="Get a new Breeze card">
+               <padding>
+                  <Insets bottom="15.0" />
+               </padding></RadioButton>
+            <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
+               <children>
+            <Button onAction="#createClicked" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" prefHeight="31.0" prefWidth="131.0" text="Create Account" />
+               </children>
+            </HBox>
+   </children>
+         <BorderPane.margin>
+            <Insets bottom="20.0" left="50.0" right="50.0" top="30.0" />
+         </BorderPane.margin>
+         <padding>
+            <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+         </padding>
+</VBox>
+    </center>
+</BorderPane>

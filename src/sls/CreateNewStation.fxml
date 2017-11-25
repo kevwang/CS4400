@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.CheckBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.RadioButton?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.VBox?>
+
+<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="334.0" prefWidth="468.0" xmlns="http://javafx.com/javafx/8.0.60" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sls.CreateNewStationController">
+   <children>
+      <HBox prefHeight="100.0" prefWidth="200.0">
+         <children>
+            <Label prefHeight="21.0" prefWidth="144.0" text="Station Name" />
+            <Pane prefHeight="200.0" prefWidth="200.0" HBox.hgrow="ALWAYS" />
+            <TextField />
+         </children>
+      </HBox>
+      <HBox prefHeight="100.0" prefWidth="200.0">
+         <children>
+            <Label prefHeight="21.0" prefWidth="153.0" text="Stop ID" />
+            <Pane prefHeight="200.0" prefWidth="200.0" HBox.hgrow="ALWAYS" />
+            <TextField />
+         </children>
+      </HBox>
+      <HBox prefHeight="100.0" prefWidth="200.0">
+         <children>
+            <Label prefHeight="21.0" prefWidth="148.0" text="Entry Fare" />
+            <Pane prefHeight="200.0" prefWidth="200.0" HBox.hgrow="ALWAYS" />
+            <TextField />
+         </children>
+      </HBox>
+      <HBox prefHeight="100.0" prefWidth="200.0">
+         <children>
+            <Label prefHeight="21.0" prefWidth="105.0" text="Station Type" />
+            <Pane prefHeight="60.0" prefWidth="94.0" HBox.hgrow="ALWAYS" />
+            <VBox prefHeight="20.0" prefWidth="200.0">
+               <children>
+                  <RadioButton mnemonicParsing="false" text="Bus Station" />
+                  <Label text="Nearest Intersection" />
+                  <TextField />
+                  <RadioButton mnemonicParsing="false" text="Train Station" />
+               </children>
+            </VBox>
+         </children>
+      </HBox>
+      <CheckBox mnemonicParsing="false" prefHeight="35.0" prefWidth="327.0" text="Open Station (Passengers can board here)" />
+      <HBox alignment="CENTER" prefHeight="73.0" prefWidth="437.0">
+         <children>
+            <Button onAction="#createClicked" mnemonicParsing="false" text="Create Station" />
+         </children>
+         <VBox.margin>
+            <Insets top="5.0" />
+         </VBox.margin>
+      </HBox>
+   </children>
+   <padding>
+      <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+   </padding>
+</VBox>

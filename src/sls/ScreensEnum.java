@@ -1,0 +1,19 @@
+package sls;
+
+/**
+ * Created by Kevin on 9/26/2017.
+ */
+public enum ScreensEnum {
+    LOGIN,
+    REGISTRATION,
+    PASSENGER_WELCOME,
+    ADMIN_WELCOME,
+    STATION_MANAGEMENT,
+    CREATE_NEW_STATION,
+    STATION_DETAIL,
+    SUSPENDED_CARDS,
+    ADMIN_CARD_MANAGEMENT,
+    FLOW_REPORT,
+    PASSENGER_CARD_MANAGEMENT,
+    TRIP_HISTORY;
+}
