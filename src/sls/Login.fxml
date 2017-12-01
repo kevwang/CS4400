@@ -15,14 +15,14 @@
          <children>
             <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Username" />
             <Pane prefHeight="200.0" prefWidth="10.0" HBox.hgrow="ALWAYS" />
-            <TextField maxWidth="150.0" prefWidth="150.0" />
+            <TextField fx:id="user" maxWidth="150.0" prefWidth="150.0" />
          </children>
       </HBox>
       <HBox maxWidth="250.0" prefHeight="60.0" prefWidth="250.0">
          <children>
             <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Password" />
             <Pane prefHeight="200.0" prefWidth="10.0" HBox.hgrow="ALWAYS" />
-            <PasswordField maxWidth="150.0" prefWidth="150.0" />
+            <PasswordField fx:id="pass" maxWidth="150.0" prefWidth="150.0" />
          </children>
       </HBox>
       <Button mnemonicParsing="false" onAction="#loginClicked" text="Login">

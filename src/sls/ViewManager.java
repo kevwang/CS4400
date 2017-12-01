@@ -49,6 +49,7 @@ public class ViewManager {
     public static void changeView(ScreensEnum aScreen) throws IOException {
         ScreenSettings fScreen = msfScreenMap.get(aScreen);
         Parent fRoot = FXMLLoader.load(ViewManager.class.getResource(fScreen.getFxmlLocation()));
+        //Parent fMenu = FXMLLoader.load(ViewManager.class.getResource("MenuBar.fxml"));
         //msPrimaryStage.setScene(new Scene(fRoot, fScreen.getHeight(), fScreen.getLength()));
         msPrimaryStage.setScene(new Scene(fRoot));
         msPrimaryStage.setTitle(fScreen.getTitle());

@@ -1,5 +1,6 @@
 package sls;
 
+import db.DatabaseConnection;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -14,6 +15,7 @@ public class Main extends Application {
     public void start(Stage primaryStage) throws Exception{
         ViewManager.setPrimaryStage(primaryStage);
         ViewManager.changeView(ScreensEnum.LOGIN);
+        DatabaseConnection.ConnectDB();
     }
 
     public static void main(String[] args) {
