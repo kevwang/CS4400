@@ -6,6 +6,7 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
+import models.User;
 
 import java.io.IOException;
 
@@ -25,7 +26,11 @@ public class LoginController {
     @FXML
     private void loginClicked() throws IOException {
         if (DBUserQueries.login(user.getText(), pass.getText())) {
-            ViewManager.changeView(ScreensEnum.PASSENGER_WELCOME);
+            if (User.getCurrentUser().getAdmin()) {
+                ViewManager.changeView(ScreensEnum.ADMIN_WELCOME);
+            } else {
+                ViewManager.changeView(ScreensEnum.PASSENGER_WELCOME);
+            }
         } else {
             Alert alert = new Alert(Alert.AlertType.ERROR, "Incorrect username/password");
             alert.showAndWait();

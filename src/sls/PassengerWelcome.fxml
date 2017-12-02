@@ -26,7 +26,7 @@
         </rowConstraints>
          <children>
             <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Breeze Card" />
-            <ComboBox prefWidth="150.0" GridPane.columnIndex="1" />
+            <ComboBox onAction="#breezeCardSelected" fx:id="breezeCards" prefWidth="150.0" GridPane.columnIndex="1" />
             <Hyperlink onAction="#manageClicked" text="Manage Cards" GridPane.columnIndex="2">
                <GridPane.margin>
                   <Insets left="10.0" />
@@ -48,7 +48,7 @@
          </rowConstraints>
          <children>
             <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Balance" />
-            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Text" GridPane.columnIndex="1" />
+            <Text fx:id="cardBalance" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" GridPane.columnIndex="1" />
          </children>
          <VBox.margin>
             <Insets bottom="10.0" />
@@ -65,16 +65,12 @@
          </rowConstraints>
          <children>
             <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Start at" />
-            <TextField disable="true" text="Hello" GridPane.columnIndex="1">
-               <GridPane.margin>
-                  <Insets />
-               </GridPane.margin>
-            </TextField>
-            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Trip in Progress" GridPane.columnIndex="2">
+            <ComboBox fx:id="startsAt" prefWidth="150.0" GridPane.columnIndex="1" />
+            <Hyperlink fx:id="startTrip" text="Start trip" GridPane.columnIndex="2">
                <GridPane.margin>
                   <Insets left="10.0" />
                </GridPane.margin>
-            </Text>
+            </Hyperlink>
          </children>
          <VBox.margin>
             <Insets bottom="10.0" />
@@ -91,8 +87,8 @@
          </rowConstraints>
          <children>
             <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Ending at" />
-            <ComboBox prefWidth="150.0" GridPane.columnIndex="1" />
-            <Hyperlink text="End Trip" GridPane.columnIndex="2">
+            <ComboBox fx:id="endsAt" prefWidth="150.0" GridPane.columnIndex="1" />
+            <Hyperlink fx:id="endTrip" text="End Trip" GridPane.columnIndex="2">
                <GridPane.margin>
                   <Insets left="10.0" />
                </GridPane.margin>

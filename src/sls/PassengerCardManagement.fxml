@@ -10,24 +10,24 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Text?>
 
-<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="379.0" prefWidth="421.0" xmlns="http://javafx.com/javafx/8.0.60" xmlns:fx="http://javafx.com/fxml/1">
+<?import javafx.scene.control.cell.PropertyValueFactory?>
+<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="379.0" prefWidth="421.0" xmlns="http://javafx.com/javafx/8.0.60" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sls.PassengerCardManagementController">
    <children>
       <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Breeze Cards">
          <VBox.margin>
             <Insets bottom="5.0" />
          </VBox.margin>
       </Text>
-      <TableView prefHeight="127.0" prefWidth="401.0">
+      <TableView fx:id="table" prefHeight="127.0" prefWidth="401.0">
         <columns>
-          <TableColumn prefWidth="217.0" text="Card Number" />
-          <TableColumn prefWidth="92.0" text="Value" />
-            <TableColumn prefWidth="91.0" />
+          <TableColumn fx:id="breezeNumCol" prefWidth="217.0" text="Card Number" />
+          <TableColumn fx:id="breezeValueCol" prefWidth="92.0" text="Value" />
         </columns>
       </TableView>
       <HBox prefHeight="47.0" prefWidth="401.0">
          <children>
-            <TextField />
-            <Button mnemonicParsing="false" text="Add Card">
+            <TextField fx:id="breezeCardNum"/>
+            <Button onAction="#addCardSelected" mnemonicParsing="false" text="Add Card">
                <HBox.margin>
                   <Insets left="10.0" />
                </HBox.margin>
@@ -41,7 +41,7 @@
          <children>
             <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Credit Card #" />
             <Pane prefHeight="200.0" prefWidth="5.0" HBox.hgrow="ALWAYS" />
-            <TextField />
+            <TextField fx:id="creditCardNum"/>
             <Pane prefHeight="200.0" prefWidth="100.0" />
          </children>
          <padding>
@@ -52,14 +52,14 @@
          <children>
             <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Value" />
             <Pane prefHeight="200.0" prefWidth="5.0" HBox.hgrow="ALWAYS" />
-            <TextField />
+            <TextField fx:id="valueToAdd"/>
             <Pane prefHeight="200.0" prefWidth="100.0" />
          </children>
          <padding>
             <Insets top="5.0" />
          </padding>
       </HBox>
-      <Button mnemonicParsing="false" text="Add Value">
+      <Button onAction="#addValueSelected" mnemonicParsing="false" text="Add Value">
          <VBox.margin>
             <Insets top="5.0" />
          </VBox.margin></Button>

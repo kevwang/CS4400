@@ -1,8 +1,12 @@
 package sls;
 
+import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
+import javafx.stage.Screen;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -17,6 +21,7 @@ import java.util.Map;
 public class ViewManager {
     private static Stage msPrimaryStage;
     private static final Map<ScreensEnum, ScreenSettings> msfScreenMap;
+    private static ScreensEnum currentScreen = ScreensEnum.LOGIN;
 
     static {
         msfScreenMap = new HashMap<>();
@@ -46,14 +51,73 @@ public class ViewManager {
                 new ScreenSettings("PassengerTripHistory.fxml", "Welcome!", 600, 400));
     }
 
+    /**
+     * Change scene based on screen parameter
+     *
+     * @param aScreen
+     * @throws IOException
+     */
     public static void changeView(ScreensEnum aScreen) throws IOException {
+        currentScreen = aScreen;
         ScreenSettings fScreen = msfScreenMap.get(aScreen);
         Parent fRoot = FXMLLoader.load(ViewManager.class.getResource(fScreen.getFxmlLocation()));
-        //Parent fMenu = FXMLLoader.load(ViewManager.class.getResource("MenuBar.fxml"));
-        //msPrimaryStage.setScene(new Scene(fRoot, fScreen.getHeight(), fScreen.getLength()));
-        msPrimaryStage.setScene(new Scene(fRoot));
+
+        Scene scene = new Scene(fRoot);
+        scene.setOnKeyPressed(event -> {
+            if (event.isControlDown() && event.getCode() == KeyCode.B) {
+                try {
+                    changeToPreviousScreen();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+
+        msPrimaryStage.setScene(scene);
         msPrimaryStage.setTitle(fScreen.getTitle());
         msPrimaryStage.show();
+    }
+
+    public static void changeToPreviousScreen() throws IOException {
+        switch (currentScreen) {
+            case LOGIN:
+                break;
+            case FLOW_REPORT:
+                changeView(ScreensEnum.LOGIN);
+                break;
+            case REGISTRATION:
+                changeView(ScreensEnum.LOGIN);
+                break;
+            case TRIP_HISTORY:
+                changeView(ScreensEnum.LOGIN);
+                break;
+            case ADMIN_WELCOME:
+                changeView(ScreensEnum.LOGIN);
+                break;
+            case STATION_DETAIL:
+                changeView(ScreensEnum.LOGIN);
+                break;
+            case SUSPENDED_CARDS:
+                changeView(ScreensEnum.LOGIN);
+                break;
+            case PASSENGER_WELCOME:
+                changeView(ScreensEnum.LOGIN);
+                break;
+            case CREATE_NEW_STATION:
+                changeView(ScreensEnum.LOGIN);
+                break;
+            case STATION_MANAGEMENT:
+                changeView(ScreensEnum.LOGIN);
+                break;
+            case ADMIN_CARD_MANAGEMENT:
+                changeView(ScreensEnum.LOGIN);
+                break;
+            case PASSENGER_CARD_MANAGEMENT:
+                changeView(ScreensEnum.LOGIN);
+                break;
+            default:
+                break;
+        }
     }
 
     public Stage getPrimaryStage() {

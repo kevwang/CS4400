@@ -19,31 +19,31 @@
          <children>
             <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Username" wrappingWidth="77.291015625" />
                   <Pane prefHeight="0.0" prefWidth="10.0" HBox.hgrow="ALWAYS" />
-            <TextField />
+            <TextField fx:id="user"/>
          </children>
       </HBox>
       <HBox prefHeight="92.0" prefWidth="200.0">
          <children>
             <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Email address" />
                   <Pane prefHeight="0.0" prefWidth="10.0" HBox.hgrow="ALWAYS" />
-            <TextField />
+            <TextField fx:id="email"/>
          </children>
       </HBox>
       <HBox prefHeight="92.0" prefWidth="200.0">
          <children>
             <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Password" />
                   <Pane prefHeight="0.0" prefWidth="10.0" HBox.hgrow="ALWAYS" />
-            <PasswordField />
+            <PasswordField fx:id="pass"/>
          </children>
       </HBox>
       <HBox prefHeight="92.0" prefWidth="200.0">
          <children>
             <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Confirm password" />
                   <Pane prefHeight="0.0" prefWidth="10.0" HBox.hgrow="ALWAYS" />
-            <PasswordField />
+            <PasswordField fx:id="confirmPass"/>
          </children>
       </HBox>
-      <RadioButton mnemonicParsing="false" text="Use my existing Breeze card">
+      <RadioButton onAction="#existingCardSelected" fx:id="existingCard" mnemonicParsing="false" text="Use my existing Breeze card">
                <VBox.margin>
                   <Insets bottom="10.0" top="10.0" />
                </VBox.margin></RadioButton>
@@ -51,10 +51,10 @@
          <children>
             <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Card Number" />
                   <Pane prefHeight="0.0" prefWidth="10.0" HBox.hgrow="ALWAYS" />
-            <TextField />
+            <TextField fx:id="cardNumber"/>
          </children>
       </HBox>
-      <RadioButton mnemonicParsing="false" text="Get a new Breeze card">
+      <RadioButton onAction="#newCardSelected" fx:id="newCard" mnemonicParsing="false" text="Get a new Breeze card">
                <padding>
                   <Insets bottom="15.0" />
                </padding></RadioButton>
