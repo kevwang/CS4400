@@ -24,7 +24,11 @@ public class Breezecard {
 
     @Override
     public String toString() {
-        return this.getCardNumber();
+        String c = this.cardNumber;
+        return c.substring(0, 4) + " " +
+            c.substring(4, 8) + " " +
+            c.substring(8, 12) + " " +
+            c.substring(12, 16);
     }
 
     public String getCardNumber() {

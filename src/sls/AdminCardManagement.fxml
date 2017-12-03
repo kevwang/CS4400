@@ -15,7 +15,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Text?>
 
-<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="457.0" prefWidth="660.0" xmlns="http://javafx.com/javafx/8.0.60" xmlns:fx="http://javafx.com/fxml/1">
+<VBox fx:controller="sls.AdminCardManagementController" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="457.0" prefWidth="660.0" xmlns="http://javafx.com/javafx/8.0.60" xmlns:fx="http://javafx.com/fxml/1">
    <children>
       <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Breeze Cards">
          <VBox.margin>
@@ -40,7 +40,7 @@
                         <Insets />
                      </HBox.margin>
                   </Pane>
-                  <TextField prefHeight="31.0" prefWidth="300.0" />
+                  <TextField fx:id="owner" prefHeight="31.0" prefWidth="300.0" />
                </children>
             </HBox>
             <HBox prefHeight="100.0" prefWidth="200.0" GridPane.rowIndex="1">
@@ -51,10 +51,10 @@
                         <Insets />
                      </HBox.margin>
                   </Pane>
-                  <TextField prefHeight="31.0" prefWidth="237.0" />
+                  <TextField fx:id="cardNum" prefHeight="31.0" prefWidth="237.0" />
                </children>
             </HBox>
-            <CheckBox mnemonicParsing="false" text="Show Suspended Cards" GridPane.columnIndex="1" />
+            <CheckBox fx:id="showSuspended" mnemonicParsing="false" text="Show Suspended Cards" GridPane.columnIndex="1" />
             <GridPane GridPane.rowIndex="2">
               <columnConstraints>
                 <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
@@ -67,30 +67,30 @@
               </rowConstraints>
                <children>
                   <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Value between" />
-                  <TextField prefHeight="25.0" prefWidth="59.0" GridPane.columnIndex="1" />
+                  <TextField fx:id="lowValue" prefHeight="25.0" prefWidth="59.0" GridPane.columnIndex="1" />
                   <Text strokeType="OUTSIDE" strokeWidth="0.0" text="        and" wrappingWidth="92.38916015625" GridPane.columnIndex="2" />
-                  <TextField prefHeight="31.0" prefWidth="124.0" GridPane.columnIndex="3" />
+                  <TextField fx:id="highValue" prefHeight="31.0" prefWidth="124.0" GridPane.columnIndex="3" />
                </children>
             </GridPane>
             <HBox prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
                <children>
                   <Pane prefHeight="200.0" prefWidth="200.0" />
-                  <Button mnemonicParsing="false" prefHeight="31.0" prefWidth="112.0" text="Reset" />
+                  <Button onAction="#resetClicked" mnemonicParsing="false" prefHeight="31.0" prefWidth="112.0" text="Reset" />
                </children>
             </HBox>
             <HBox prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="2">
                <children>
                   <Pane prefHeight="200.0" prefWidth="200.0" />
-                  <Button mnemonicParsing="false" prefHeight="31.0" prefWidth="179.0" text="Update Filter" />
+                  <Button onAction="#updateClicked" mnemonicParsing="false" prefHeight="31.0" prefWidth="179.0" text="Update Filter" />
                </children>
             </HBox>
          </children>
       </GridPane>
-      <TableView prefHeight="200.0" prefWidth="200.0">
+      <TableView fx:id="table" prefHeight="200.0" prefWidth="200.0">
         <columns>
-          <TableColumn prefWidth="75.0" text="Card #" />
-          <TableColumn prefWidth="75.0" text="Value" />
-            <TableColumn prefWidth="75.0" text="Owner" />
+          <TableColumn fx:id="cardNumCol" prefWidth="75.0" text="Card #" />
+          <TableColumn fx:id="valueCol" prefWidth="75.0" text="Value" />
+            <TableColumn fx:id="ownerCol" prefWidth="75.0" text="Owner" />
         </columns>
          <VBox.margin>
             <Insets top="10.0" />
@@ -100,11 +100,11 @@
          <children>
             <HBox prefHeight="100.0" prefWidth="200.0">
                <children>
-                  <TextField>
+                  <TextField fx:id="setValue">
                      <HBox.margin>
                         <Insets right="5.0" top="5.0" />
                      </HBox.margin></TextField>
-                  <Button mnemonicParsing="false" text="Set Value of Selected Card">
+                  <Button onAction="#setValueClicked" mnemonicParsing="false" text="Set Value of Selected Card">
                      <HBox.margin>
                         <Insets top="5.0" />
                      </HBox.margin></Button>
@@ -112,11 +112,11 @@
             </HBox>
             <HBox prefHeight="100.0" prefWidth="200.0">
                <children>
-                  <TextField>
+                  <TextField fx:id="transferUser">
                      <HBox.margin>
                         <Insets right="5.0" top="5.0" />
                      </HBox.margin></TextField>
-                  <Button mnemonicParsing="false" prefHeight="31.0" prefWidth="196.0" text="Transfer Selected Card">
+                  <Button onAction="#transferCardClicked" mnemonicParsing="false" prefHeight="31.0" prefWidth="196.0" text="Transfer Selected Card">
                      <HBox.margin>
                         <Insets top="5.0" />
                      </HBox.margin></Button>

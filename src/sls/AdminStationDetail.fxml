@@ -13,13 +13,13 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Text?>
 
-<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="305.0" prefWidth="533.0" xmlns="http://javafx.com/javafx/8.0.60" xmlns:fx="http://javafx.com/fxml/1">
+<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="305.0" prefWidth="533.0" xmlns="http://javafx.com/javafx/8.0.112" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sls.AdminStationDetailController">
    <children>
       <HBox prefHeight="80.0" prefWidth="493.0">
          <children>
-            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Station Name" wrappingWidth="100.341796875" />
+            <Text fx:id="stationName" strokeType="OUTSIDE" strokeWidth="0.0" text="Station Name" wrappingWidth="126.341796875" />
             <Pane maxHeight="80.0" minHeight="80.0" prefHeight="103.0" prefWidth="80.0" HBox.hgrow="ALWAYS" />
-            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Stop ID" wrappingWidth="60.27734375" />
+            <Text fx:id="stopId" strokeType="OUTSIDE" strokeWidth="0.0" text="Stop ID" wrappingWidth="105.27734375" />
          </children>
       </HBox>
       <GridPane prefHeight="88.0" prefWidth="492.0">
@@ -34,16 +34,16 @@
         </rowConstraints>
          <children>
             <Label text="Fare" />
-            <TextField GridPane.columnIndex="1" />
-            <Hyperlink text="Update Fare" GridPane.columnIndex="2" />
+            <TextField fx:id="fare" GridPane.columnIndex="1" />
+            <Hyperlink fx:id="updateFare" onAction="#updateFareClicked" text="Update Fare" GridPane.columnIndex="2" />
             <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Nearest Intersection" GridPane.rowIndex="1" />
-            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Intersection" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+            <Text fx:id="intersection" strokeType="OUTSIDE" strokeWidth="0.0" text="Intersection" GridPane.columnIndex="1" GridPane.rowIndex="1" />
          </children>
          <VBox.margin>
             <Insets />
          </VBox.margin>
       </GridPane>
-      <CheckBox mnemonicParsing="false" text="Open Station (passengers can enter here)">
+      <CheckBox onAction="#tryToSelectYo" fx:id="openStation" mnemonicParsing="false" text="Open Station (passengers can enter here)">
          <VBox.margin>
             <Insets top="10.0" />
          </VBox.margin></CheckBox>

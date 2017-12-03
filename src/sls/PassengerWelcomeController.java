@@ -2,6 +2,7 @@ package sls;
 
 import db.DBUserQueries;
 import javafx.fxml.FXML;
+import javafx.scene.control.Alert;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Hyperlink;
 import javafx.scene.text.Text;
@@ -19,10 +20,10 @@ public class PassengerWelcomeController {
     private Text cardBalance;
 
     @FXML
-    private ComboBox startsAt;
+    private ComboBox<String> startsAt;
 
     @FXML
-    private ComboBox endsAt;
+    private ComboBox<String> endsAt;
 
     @FXML
     private Hyperlink startTrip;
@@ -36,6 +37,7 @@ public class PassengerWelcomeController {
     private List<Breezecard> breezecardList;
     private List<Station> startStationList;
     private List<Station> endStationList;
+    private boolean tripInProgress = false;
 
     @FXML
     private void initialize() {
@@ -90,5 +92,41 @@ public class PassengerWelcomeController {
     @FXML
     private void logOutClicked() throws IOException {
         ViewManager.changeView(ScreensEnum.LOGIN);
+    }
+
+    @FXML
+    private void startTripClicked() {
+        if (!tripInProgress) {
+            if (DBUserQueries.startTrip(
+                    breezeCards.getValue().getCardNumber(),
+                    startsAt.getValue()
+            )) {
+                startTrip.setText("Trip currently in progress");
+                breezeCards.setEditable(false);
+                startsAt.setEditable(false);
+                tripInProgress = true;
+            } else {
+                Alert alert = new Alert(Alert.AlertType.ERROR, "Error starting trip");
+                alert.showAndWait();
+            }
+        }
+    }
+
+    @FXML
+    private void endTripClicked() {
+        if (tripInProgress) {
+            if (DBUserQueries.endTrip(
+                    breezeCards.getValue().getCardNumber(),
+                    endsAt.getValue()
+            )) {
+                startTrip.setText("Trip currently in progress");
+                breezeCards.setEditable(true);
+                startsAt.setEditable(true);
+                tripInProgress = false;
+            } else {
+                Alert alert = new Alert(Alert.AlertType.ERROR, "Error ending trip");
+                alert.showAndWait();
+            }
+        }
     }
 }

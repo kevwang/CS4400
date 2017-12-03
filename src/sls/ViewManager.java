@@ -83,37 +83,37 @@ public class ViewManager {
             case LOGIN:
                 break;
             case FLOW_REPORT:
-                changeView(ScreensEnum.LOGIN);
+                changeView(ScreensEnum.ADMIN_WELCOME);
                 break;
             case REGISTRATION:
                 changeView(ScreensEnum.LOGIN);
                 break;
             case TRIP_HISTORY:
-                changeView(ScreensEnum.LOGIN);
+                changeView(ScreensEnum.PASSENGER_WELCOME);
                 break;
             case ADMIN_WELCOME:
                 changeView(ScreensEnum.LOGIN);
                 break;
             case STATION_DETAIL:
-                changeView(ScreensEnum.LOGIN);
+                changeView(ScreensEnum.ADMIN_WELCOME);
                 break;
             case SUSPENDED_CARDS:
-                changeView(ScreensEnum.LOGIN);
+                changeView(ScreensEnum.ADMIN_WELCOME);
                 break;
             case PASSENGER_WELCOME:
                 changeView(ScreensEnum.LOGIN);
                 break;
             case CREATE_NEW_STATION:
-                changeView(ScreensEnum.LOGIN);
+                changeView(ScreensEnum.ADMIN_WELCOME);
                 break;
             case STATION_MANAGEMENT:
-                changeView(ScreensEnum.LOGIN);
+                changeView(ScreensEnum.ADMIN_WELCOME);
                 break;
             case ADMIN_CARD_MANAGEMENT:
-                changeView(ScreensEnum.LOGIN);
+                changeView(ScreensEnum.ADMIN_WELCOME);
                 break;
             case PASSENGER_CARD_MANAGEMENT:
-                changeView(ScreensEnum.LOGIN);
+                changeView(ScreensEnum.PASSENGER_WELCOME);
                 break;
             default:
                 break;

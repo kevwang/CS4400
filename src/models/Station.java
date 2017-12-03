@@ -9,6 +9,7 @@ public class Station {
     private Double fare;
     private Boolean closed;
     private Boolean isTrain;
+    private String intersection;
 
     public Station(String s, String n, Double f, Boolean c, Boolean i) {
         stopId = s;
@@ -16,6 +17,15 @@ public class Station {
         fare = f;
         closed = c;
         isTrain = i;
+    }
+
+    public Station(String s, String n, Double f, Boolean c, Boolean i, String in) {
+        stopId = s;
+        name = n;
+        fare = f;
+        closed = c;
+        isTrain = i;
+        intersection = in;
     }
 
     public String getStopId() {
@@ -56,5 +66,13 @@ public class Station {
 
     public void setTrain(Boolean train) {
         isTrain = train;
+    }
+
+    public String getIntersection() {
+        return intersection;
+    }
+
+    public void setIntersection(String intersection) {
+        this.intersection = intersection;
     }
 }

@@ -14,7 +14,7 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 
-<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="390.0" prefWidth="650.0" xmlns="http://javafx.com/javafx/8.0.60" xmlns:fx="http://javafx.com/fxml/1">
+<VBox fx:controller="sls.FlowReportController" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="390.0" prefWidth="650.0" xmlns="http://javafx.com/javafx/8.0.60" xmlns:fx="http://javafx.com/fxml/1">
    <children>
       <GridPane prefHeight="139.0" prefWidth="600.0">
         <columnConstraints>
@@ -31,33 +31,33 @@
                      <children>
                         <Label text="Start Time" />
                         <Pane prefHeight="0.0" prefWidth="10.0" HBox.hgrow="ALWAYS" />
-                        <TextField />
+                        <TextField fx:id="startTime"/>
                      </children>
                   </HBox>
                   <HBox prefHeight="100.0" prefWidth="200.0">
                      <children>
                         <Label text="End Time" />
                         <Pane prefHeight="0.0" prefWidth="10.0" HBox.hgrow="ALWAYS" />
-                        <TextField />
+                        <TextField fx:id="endTime" />
                      </children>
                   </HBox>
                </children>
             </VBox>
             <ButtonBar nodeOrientation="LEFT_TO_RIGHT" prefHeight="40.0" prefWidth="200.0" GridPane.columnIndex="1">
               <buttons>
-                  <Button mnemonicParsing="false" text="Update" />
-                <Button mnemonicParsing="false" text="Reset" />
+                  <Button onAction="#updateClicked" mnemonicParsing="false" text="Update" />
+                <Button onAction="#resetClicked" mnemonicParsing="false" text="Reset" />
               </buttons>
             </ButtonBar>
          </children>
       </GridPane>
-      <TableView prefHeight="200.0" prefWidth="200.0">
+      <TableView fx:id="table" prefHeight="200.0" prefWidth="200.0">
         <columns>
-          <TableColumn prefWidth="157.0" text="Station Name" />
-          <TableColumn prefWidth="123.0" text="# Passengers In" />
-            <TableColumn prefWidth="139.0" text="# Passengers Out" />
-            <TableColumn prefWidth="61.0" text="Flow" />
-            <TableColumn prefWidth="129.0" text="Revenue" />
+          <TableColumn fx:id="stationNameCol" prefWidth="157.0" text="Station Name" />
+          <TableColumn fx:id="passengersInCol" prefWidth="123.0" text="# Passengers In" />
+            <TableColumn fx:id="passengersOutCol" prefWidth="139.0" text="# Passengers Out" />
+            <TableColumn fx:id="flowCol" prefWidth="61.0" text="Flow" />
+            <TableColumn fx:id="revenueCol" prefWidth="129.0" text="Revenue" />
         </columns>
       </TableView>
    </children>

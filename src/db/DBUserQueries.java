@@ -7,6 +7,7 @@ import models.User;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -83,11 +84,66 @@ public class DBUserQueries {
             stmt.executeUpdate(query);
             query = "INSERT INTO `Breezecard` (`BreezecardNum`, `Value`, `BelongsTo`) VALUES ('" + breezeNum + "', '0', '"
                     + username + "');";
-            stmt.executeUpdate(query);
+            int rInt = stmt.executeUpdate(query);
+            if (rInt == 0) {
+                return false;
+            }
 
             // If we are here, success! Set this as the current user
             User currentUser = new User(username, false, email);
             User.setCurrentUser(currentUser);
+
+            return true;
+        } catch (Exception e) {
+            System.err.println(e.getMessage());
+        }
+
+        return false;
+    }
+
+    /**
+     * For passenger welcome controller
+     * @param breezeNum
+     * @return
+     */
+    public static boolean startTrip(String breezeNum, String stopId) {
+        try {
+            // First see if user exists, if so, return false
+            Statement stmt = DatabaseConnection.conn.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
+            String query = "INSERT INTO `Trip` (`Tripfare`, `StartTime`, `BreezecardNum`, `StartsAt`, `EndsAt`)" +
+                "VALUES ('" + 5 + "', NOW(), '"+ breezeNum + "', '" + stopId + "', NULL);";
+
+            int rs = stmt.executeUpdate(query);
+
+            if (rs == 0) {
+                return false;
+            }
+
+            return true;
+        } catch (Exception e) {
+            System.err.println(e.getMessage());
+        }
+
+        return false;
+    }
+
+    /**
+     * For passenger welcome controller
+     * @param breezeNum
+     * @return
+     */
+    public static boolean endTrip(String stopId, String breezeNum) {
+        try {
+            // First see if user exists, if so, return false
+            Statement stmt = DatabaseConnection.conn.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
+            String query = "UPDATE 'Trip' SET  'EndsAt' = '" + stopId + "' WHERE" +
+                "'Trip'.'EndsAt' IS NULL AND 'Trip'.'BreezecardNum' ='" + breezeNum + "'";
+
+            int rs = stmt.executeUpdate(query);
+
+            if (rs == 0) { // If nothing updated..
+                return false;
+            }
 
             return true;
         } catch (Exception e) {

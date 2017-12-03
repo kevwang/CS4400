@@ -13,6 +13,7 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 
+<?import javafx.scene.text.Text?>
 <VBox fx:controller="sls.PassengerTripHistoryController" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.60" xmlns:fx="http://javafx.com/fxml/1">
    <children>
       <GridPane prefHeight="139.0" prefWidth="600.0">
@@ -28,35 +29,35 @@
                <children>
                   <HBox prefHeight="100.0" prefWidth="318.0">
                      <children>
-                        <Button mnemonicParsing="false" prefHeight="31.0" prefWidth="98.0" text="Start Time" />
+                        <Text  text="Start Time" />
                         <Pane prefHeight="0.0" prefWidth="10.0" HBox.hgrow="ALWAYS" />
-                        <TextField />
+                        <TextField fx:id="startTime"/>
                      </children>
                   </HBox>
                   <HBox prefHeight="100.0" prefWidth="200.0">
                      <children>
-                        <Button mnemonicParsing="false" prefHeight="31.0" prefWidth="95.0" text="End Time" />
+                        <Text text="End Time" />
                         <Pane prefHeight="0.0" prefWidth="10.0" HBox.hgrow="ALWAYS" />
-                        <TextField />
+                        <TextField fx:id="endTime"/>
                      </children>
                   </HBox>
                </children>
             </VBox>
             <ButtonBar nodeOrientation="LEFT_TO_RIGHT" prefHeight="139.0" prefWidth="240.0" GridPane.columnIndex="1">
               <buttons>
-                  <Button mnemonicParsing="false" text="Update" />
-                <Button mnemonicParsing="false" text="Reset" />
+                  <Button onAction="#updateClicked" fx:id="update" mnemonicParsing="false" text="Update" />
+                <Button onAction="#resetClicked" fx:id="reset" mnemonicParsing="false" text="Reset" />
               </buttons>
             </ButtonBar>
          </children>
       </GridPane>
-      <TableView prefHeight="200.0" prefWidth="200.0">
+      <TableView fx:id="table" prefHeight="200.0" prefWidth="200.0">
         <columns>
-          <TableColumn prefWidth="182.0" text="Time" />
-          <TableColumn prefWidth="113.0" text="Source" />
-            <TableColumn prefWidth="124.0" text="Destination" />
-            <TableColumn prefWidth="102.0" text="Fare Paid" />
-            <TableColumn prefWidth="78.0" text="Card #" />
+          <TableColumn fx:id="timeCol" prefWidth="182.0" text="Time" />
+          <TableColumn fx:id="sourceCol" prefWidth="113.0" text="Source" />
+            <TableColumn fx:id="destCol" prefWidth="124.0" text="Destination" />
+            <TableColumn fx:id="fareCol" prefWidth="102.0" text="Fare Paid" />
+            <TableColumn fx:id="cardCol" prefWidth="78.0" text="Card #" />
         </columns>
       </TableView>
    </children>

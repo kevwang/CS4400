@@ -16,21 +16,21 @@
          <children>
             <Label prefHeight="21.0" prefWidth="144.0" text="Station Name" />
             <Pane prefHeight="200.0" prefWidth="200.0" HBox.hgrow="ALWAYS" />
-            <TextField />
+            <TextField fx:id="stationName" />
          </children>
       </HBox>
       <HBox prefHeight="100.0" prefWidth="200.0">
          <children>
             <Label prefHeight="21.0" prefWidth="153.0" text="Stop ID" />
             <Pane prefHeight="200.0" prefWidth="200.0" HBox.hgrow="ALWAYS" />
-            <TextField />
+            <TextField fx:id="stopId"/>
          </children>
       </HBox>
       <HBox prefHeight="100.0" prefWidth="200.0">
          <children>
             <Label prefHeight="21.0" prefWidth="148.0" text="Entry Fare" />
             <Pane prefHeight="200.0" prefWidth="200.0" HBox.hgrow="ALWAYS" />
-            <TextField />
+            <TextField fx:id="fare"/>
          </children>
       </HBox>
       <HBox prefHeight="100.0" prefWidth="200.0">
@@ -39,15 +39,15 @@
             <Pane prefHeight="60.0" prefWidth="94.0" HBox.hgrow="ALWAYS" />
             <VBox prefHeight="20.0" prefWidth="200.0">
                <children>
-                  <RadioButton mnemonicParsing="false" text="Bus Station" />
+                  <RadioButton onAction="#busClicked" fx:id="busButton" mnemonicParsing="false" text="Bus Station" />
                   <Label text="Nearest Intersection" />
-                  <TextField />
-                  <RadioButton mnemonicParsing="false" text="Train Station" />
+                  <TextField fx:id="intersection"/>
+                  <RadioButton onAction="#trainClicked" fx:id="trainButton" mnemonicParsing="false" text="Train Station" />
                </children>
             </VBox>
          </children>
       </HBox>
-      <CheckBox mnemonicParsing="false" prefHeight="35.0" prefWidth="327.0" text="Open Station (Passengers can board here)" />
+      <CheckBox fx:id="openStation" mnemonicParsing="false" prefHeight="35.0" prefWidth="327.0" text="Open Station (Passengers can board here)" />
       <HBox alignment="CENTER" prefHeight="73.0" prefWidth="437.0">
          <children>
             <Button onAction="#createClicked" mnemonicParsing="false" text="Create Station" />
