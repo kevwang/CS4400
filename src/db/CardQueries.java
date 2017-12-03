@@ -57,11 +57,10 @@ public class CardQueries {
                 "FROM `Trip`" +
                 "WHERE `BreezecardNum` = " + breezeNum + ";";
 
-
             ResultSet rs = stmt.executeQuery(query);
 
             // If card is in trip, there is problem, else transfer
-            if (!rs.next()) {
+            if (!rs.next() || rs.getString("EndsAt") != null) {
                 query = "UPDATE `cs4400_Group_45`.`Breezecard` SET `BelongsTo` = '" + newOwner + "' WHERE\n" +
                     "CONVERT( `Breezecard`.`BreezecardNum`USING utf8 ) = '" + breezeNum + "' LIMIT 1 ;";
                 int r = stmt.executeUpdate(query);
@@ -70,6 +69,10 @@ public class CardQueries {
                     System.out.println("There was a problem transferring the card");
                     return false;
                 }
+                // Also delete from conflict table if it's there
+                query = "DELETE FROM `cs4400_Group_45`.`Conflict`\n" +
+                        "WHERE `BreezecardNum` = '" + breezeNum + "';";
+                stmt.executeUpdate(query);
             } else {
                 System.out.println("Card is currently in a trip");
                 return false;

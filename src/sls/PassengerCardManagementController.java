@@ -72,7 +72,7 @@ public class PassengerCardManagementController {
         )) {
             breezeCardNum.setText("");
             this.refresh();
-            Alert alert = new Alert(Alert.AlertType.INFORMATION, "Card added successfully");
+            Alert alert = new Alert(Alert.AlertType.INFORMATION, "Card added");
             alert.showAndWait();
         } else {
             Alert alert = new Alert(Alert.AlertType.ERROR, "Error adding card");
@@ -82,6 +82,17 @@ public class PassengerCardManagementController {
 
     @FXML
     private void addValueSelected() {
+        try {
+            Double v = Double.parseDouble(valueToAdd.getText());
+            if (v < 0.0 || v > 1000.0) {
+                Alert alert = new Alert(Alert.AlertType.ERROR, "Bad value");
+                alert.showAndWait();
+            }
+        } catch (Exception e) {
+            Alert alert = new Alert(Alert.AlertType.ERROR, "Bad value");
+            alert.showAndWait();
+        }
+
         if (UserCardManagementQueries.addValue(
                 table.getSelectionModel().getSelectedItem().getCardNumber(),
                 Double.parseDouble(valueToAdd.getText())

@@ -9,6 +9,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import models.Breezecard;
 import models.SuspendedCard;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -29,6 +30,7 @@ public class AdminCardManagementController {
     @FXML private TableColumn valueCol;
     @FXML private TableColumn ownerCol;
 
+    private List<SuspendedCard> suspendedCards = new ArrayList<>();
 
     @FXML
     private void initialize() {
@@ -83,6 +85,17 @@ public class AdminCardManagementController {
 
     @FXML
     private void setValueClicked() {
+        try {
+            Double v = Double.parseDouble(setValue.getText());
+            if (v < 0 || v > 1000) {
+                Alert alert = new Alert(Alert.AlertType.ERROR, "Bad value");
+                alert.showAndWait();
+            }
+        } catch (Exception e) {
+            Alert alert = new Alert(Alert.AlertType.ERROR, "Bad value");
+            alert.showAndWait();
+        }
+
         if (CardQueries.setValue(
                 table.getSelectionModel().getSelectedItem().getCardNumber(),
                 Double.parseDouble(setValue.getText())

@@ -25,6 +25,10 @@ public class CreateNewStationController {
 
     @FXML
     private void createClicked() throws IOException {
+        if (!validate()) {
+            Alert alert = new Alert(Alert.AlertType.ERROR, "Error in your parameters");
+            alert.showAndWait();
+        }
         if (StationManagementQueries.createNewStation(
                 stationName.getText(),
                 stopId.getText(),
@@ -39,6 +43,23 @@ public class CreateNewStationController {
             Alert alert = new Alert(Alert.AlertType.ERROR, "There was an error in adding the station");
             alert.showAndWait();
         }
+    }
+
+    private boolean validate() {
+        try {
+            if (!stationName.getText().isEmpty() &&
+                !stopId.getText().isEmpty() &&
+                !fare.getText().isEmpty()) {
+                Double fareDouble = Double.parseDouble(fare.getText());
+                if (fareDouble < 0.0 || fareDouble > 1000.0) {
+                    return false;
+                }
+                return true;
+            }
+        } catch (Exception e) {
+            return false;
+        }
+        return false;
     }
 
     @FXML

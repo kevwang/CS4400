@@ -42,6 +42,10 @@ public class AdminStationDetailController {
 
     @FXML
     private void updateFareClicked() {
+        if (!validate()) {
+            Alert alert = new Alert(Alert.AlertType.ERROR, "Incorrect parameters");
+            alert.showAndWait();
+        }
         if (StationManagementQueries.setFare(
                 stopId.getText(), Double.parseDouble(fare.getText()))) {
             Alert alert = new Alert(Alert.AlertType.INFORMATION, "Fare updated");
@@ -50,6 +54,21 @@ public class AdminStationDetailController {
             Alert alert = new Alert(Alert.AlertType.ERROR, "Error updating fare");
             alert.showAndWait();
         }
+    }
+
+    private boolean validate() {
+        try {
+            if (!fare.getText().isEmpty()) {
+                Double fareDouble = Double.parseDouble(fare.getText());
+                if (fareDouble < 0.0 || fareDouble > 1000.0) {
+                    return false;
+                }
+                return true;
+            }
+        } catch (Exception e) {
+            return false;
+        }
+        return false;
     }
 
     @FXML

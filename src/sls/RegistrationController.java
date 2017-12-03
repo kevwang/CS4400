@@ -57,7 +57,7 @@ public class RegistrationController {
 
         if (DBUserQueries.register(user.getText(), email.getText(), pass.getText(),
                 cardNumber.getText().replaceAll("\\s+",""))) {
-            ViewManager.changeView(ScreensEnum.ADMIN_WELCOME);
+            ViewManager.changeView(ScreensEnum.PASSENGER_WELCOME);
         } else {
             Alert alert = new Alert(Alert.AlertType.ERROR, "There was a problem making your account");
             alert.showAndWait();
