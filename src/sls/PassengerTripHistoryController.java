@@ -11,6 +11,9 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import models.Trip;
 
+import java.sql.Date;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.List;
 
 /**
@@ -40,16 +43,24 @@ public class PassengerTripHistoryController {
         fareCol.setCellValueFactory(new PropertyValueFactory<Trip, String>("tripFare"));
         cardCol.setCellValueFactory(new PropertyValueFactory<Trip, String>("cardNum"));
 
+        startTime.setText("2017-10-02 13:11:11");
+        endTime.setPromptText("Empty = NOW()");
         this.refresh();
     }
 
     private void refresh() {
-        tripList = TripHistoryQueries.getTrips();
+        try {
+            tripList = TripHistoryQueries.getTrips(
+                    startTime.getText().isEmpty() ? null : new SimpleDateFormat("yyyy-MM-dd hh:mm:ss").parse(startTime.getText()),
+                    endTime.getText().isEmpty() ? null : new SimpleDateFormat("yyyy-MM-dd hh:mm:ss").parse(endTime.getText()));
 
-        if (tripList != null) {
-            final ObservableList<Trip> data = FXCollections.observableArrayList();
-            data.addAll(tripList);
-            table.setItems(data);
+            if (tripList != null) {
+                final ObservableList<Trip> data = FXCollections.observableArrayList();
+                data.addAll(tripList);
+                table.setItems(data);
+            }
+        } catch (ParseException p) {
+            System.err.println(p.getMessage());
         }
     }
 
@@ -60,6 +71,8 @@ public class PassengerTripHistoryController {
 
     @FXML
     private void resetClicked() {
+        startTime.setText("2017-10-02 13:11:11");
+        endTime.setText("");
         this.refresh();
     }
 }

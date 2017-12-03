@@ -19,8 +19,8 @@ public class LoginController {
 
     @FXML
     private void initialize() {
-        user.setText("admin");
-        pass.setText("admin123");
+        user.setText("sandrapatel");
+        pass.setText("iphonex");
     }
 
     @FXML

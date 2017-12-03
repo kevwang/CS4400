@@ -29,7 +29,7 @@ public class CreateNewStationController {
                 stationName.getText(),
                 stopId.getText(),
                 fare.getText(),
-                intersection.getText(),
+                intersection.getText().isEmpty() ? null : intersection.getText(),
                 busButton.isSelected(),
                 openStation.isSelected()
         )) {

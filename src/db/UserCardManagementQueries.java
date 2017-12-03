@@ -25,26 +25,43 @@ public class UserCardManagementQueries {
             Statement stmt = DatabaseConnection.conn.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
             String query = "SELECT `BelongsTo`" +
                 "FROM `Breezecard`" +
-                "WHERE `BreezecardNum` = " + breezeNum + ";";
+                "WHERE `BreezecardNum` = '" + breezeNum + "';";
 
             ResultSet rs = stmt.executeQuery(query);
 
             // Two cases: card found and suspend, none found and insert
             if (rs.next()) {
-                System.out.println("Breezecard found, suspending card..");
-                query = "INSERT INTO `Conflict` (`Username`, `BreezecardNum`, DateTime)" +
-                    "VALUES (" + currentUser.getUsername() + ", " + breezeNum + ", Now())";
-                int susInt = stmt.executeUpdate(query);
+                // If card name is not null, suspend, else assign to new user
+                if (rs.getString("BelongsTo") != null) {
+                    System.out.println("Breezecard found, suspending card..");
+                    query = "INSERT INTO `Conflict` (`Username`, `BreezecardNum`, DateTime)" +
+                            "VALUES ('" + currentUser.getUsername() + "', '" + breezeNum + "', Now())";
+                    int susInt = stmt.executeUpdate(query);
 
-                if (susInt == 0) {
-                    System.out.println("There was a problem inserting the suspended card");
-                    return false;
+                    if (susInt == 0) {
+                        System.out.println("There was a problem inserting the suspended card");
+                        return false;
+                    } else {
+                        System.out.println("Suspended card inserted!");
+                    }
                 } else {
-                    System.out.println("Suspended card inserted!");
+                    System.out.println("Breezecard found with no owner, updating");
+                    query = "UPDATE `cs4400_Group_45`.`Breezecard` SET `BelongsTo` ='" + currentUser.getUsername() + "' WHERE" +
+                        "CONVERT( `Breezecard`.`BreezecardNum`USING utf8 ) = '" + breezeNum + "' LIMIT 1 ;";
+                    int susInt = stmt.executeUpdate(query);
+
+                    if (susInt == 0) {
+                        System.out.println("There was a problem updating the card owner");
+                        return false;
+                    } else {
+                        System.out.println("Card updated!");
+                    }
                 }
+
+            // None found, insert breezecard
             } else {
                 query = "INSERT INTO `Breezecard` (`BreezecardNum`, `Value`, `BelongsTo`)" +
-                    "VALUES (" + breezeNum + ", 0, " + currentUser.getUsername() + ")";
+                    "VALUES ('" + breezeNum + "', 0, '" + currentUser.getUsername() + "')";
                 int insInt = stmt.executeUpdate(query);
 
                 if (insInt == 0) {
@@ -68,11 +85,36 @@ public class UserCardManagementQueries {
      * @param breezeNum
      * @return
      */
+    public static boolean removeCard(String breezeNum) {
+        try {
+            Statement stmt = DatabaseConnection.conn.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
+            String query = "DELETE FROM `cs4400_Group_45`.`Conflict`" +
+                    "WHERE `BreezecardNum` = '" + breezeNum + "';";
+
+            int rs = stmt.executeUpdate(query);
+
+            if (rs == 0) {
+                return false;
+            }
+
+            return true;
+        } catch (Exception e) {
+            System.err.println(e.getMessage());
+        }
+
+        return false;
+    }
+
+    /**
+     * For passenger welcome controller
+     * @param breezeNum
+     * @return
+     */
     public static boolean addValue(String breezeNum, Double value) {
         try {
             Statement stmt = DatabaseConnection.conn.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
             String query = "UPDATE `cs4400_Group_45`.`Breezecard` SET `Value` = (`Value`+" + value + ")" +
-                "WHERE CONVERT( `Breezecard`.`BreezecardNum`USING utf8 ) = " + breezeNum + " LIMIT 1 ;";
+                "WHERE CONVERT( `Breezecard`.`BreezecardNum`USING utf8 ) = '" + breezeNum + "' LIMIT 1 ;";
 
             int rs = stmt.executeUpdate(query);
 
@@ -96,9 +138,9 @@ public class UserCardManagementQueries {
         try {
             User currentUser = User.getCurrentUser();
             Statement stmt = DatabaseConnection.conn.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
-            String query = "SELECT  `BreezecardNum` AS  `Card Number` ,  `Value`\n" +
+            String query = "SELECT  `BreezecardNum` AS  `Card Number` ,  `Value` \n" +
                 "FROM  `Breezecard`\n" +
-                "WHERE  `BelongsTo` =  '" + currentUser.getUsername() + "';";
+                "WHERE  `BelongsTo` = '" + currentUser.getUsername() + "';";
 
             ResultSet rs = stmt.executeQuery(query);
 

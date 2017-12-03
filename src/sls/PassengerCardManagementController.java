@@ -3,12 +3,13 @@ package sls;
 import db.UserCardManagementQueries;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
-import javafx.scene.control.Alert;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.MouseButton;
+import javafx.scene.input.MouseEvent;
 import models.Breezecard;
 
 import java.util.List;
@@ -37,8 +38,20 @@ public class PassengerCardManagementController {
     @FXML
     private void initialize() {
         // Set column properties
+        ContextMenu cm = new ContextMenu();
+        MenuItem mi = new MenuItem("Remove");
+        mi.setOnAction(event -> remove());
+        cm.getItems().add(mi);
+
         breezeNumCol.setCellValueFactory(new PropertyValueFactory<Breezecard, String>("cardNumber"));
         breezeValueCol.setCellValueFactory(new PropertyValueFactory<Breezecard, String>("value"));
+        table.addEventHandler(MouseEvent.MOUSE_CLICKED, t -> {
+            if(t.getButton() == MouseButton.SECONDARY)
+            {
+                cm.show(table , t.getScreenX() , t.getScreenY());
+            }
+        });
+
         this.refresh();
     }
 
@@ -55,10 +68,12 @@ public class PassengerCardManagementController {
     @FXML
     private void addCardSelected() {
         if (UserCardManagementQueries.addCard(
-                breezeCardNum.getText()
+                breezeCardNum.getText().replaceAll("\\s+","")
         )) {
             breezeCardNum.setText("");
             this.refresh();
+            Alert alert = new Alert(Alert.AlertType.INFORMATION, "Card added successfully");
+            alert.showAndWait();
         } else {
             Alert alert = new Alert(Alert.AlertType.ERROR, "Error adding card");
             alert.showAndWait();
@@ -72,8 +87,21 @@ public class PassengerCardManagementController {
                 Double.parseDouble(valueToAdd.getText())
         )) {
             this.refresh();
+            Alert alert = new Alert(Alert.AlertType.INFORMATION, "Card value added successfully");
+            alert.showAndWait();
         } else {
             Alert alert = new Alert(Alert.AlertType.ERROR, "Error adding value");
+            alert.showAndWait();
+        }
+    }
+
+    private void remove() {
+        if (UserCardManagementQueries.removeCard(
+                table.getSelectionModel().getSelectedItem().getCardNumber()
+        )) {
+            this.refresh();
+        } else {
+            Alert alert = new Alert(Alert.AlertType.ERROR, "Error removing card");
             alert.showAndWait();
         }
     }

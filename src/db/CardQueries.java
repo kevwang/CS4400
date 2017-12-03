@@ -7,7 +7,9 @@ import models.SuspendedCard;
 
 import java.sql.ResultSet;
 import java.sql.Statement;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -123,8 +125,12 @@ public class CardQueries {
      * For Flow report controller
      * @return
      */
-    public static List<StationFlow> getFlowReport() {
+    public static List<StationFlow> getFlowReport(Date start, Date end) {
         try {
+            String endString = end == null ? "NOW()" : "'" +
+                    new SimpleDateFormat("yyyy-MM-dd hh:mm:ss").format(end) + "'";
+            String startString = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss").format(start);
+
             Statement stmt = DatabaseConnection.conn.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
             String query =
                     "SELECT Name AS  'Station Name', COALESCE( Cin, 0 ) AS  '# Passengers In', COALESCE( Cout, 0 ) AS  '# Passengers Out', \n" +

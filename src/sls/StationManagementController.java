@@ -1,6 +1,9 @@
 package sls;
 
 import db.StationManagementQueries;
+import javafx.beans.InvalidationListener;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -9,6 +12,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.util.Callback;
 import models.Station;
 
 import java.io.IOException;
@@ -33,9 +37,14 @@ public class StationManagementController {
         nameCol.setCellValueFactory(new PropertyValueFactory<Station, String>("name"));
         stopIdCol.setCellValueFactory(new PropertyValueFactory<Station, String>("stopId"));
         fareCol.setCellValueFactory(new PropertyValueFactory<Station, String>("fare"));
-        statusCol.setCellValueFactory(new PropertyValueFactory<Station, String>("closed"));
+        statusCol.setCellValueFactory(new PropertyValueFactory<Station, String>("closedString"));
 
         stationList = StationManagementQueries.getStations();
+        for (Station s : stationList) {
+            s.setClosedString(
+                    s.getClosed() ? "Closed" : "Open");
+        }
+
         if (stationList != null) {
             final ObservableList<Station> data = FXCollections.observableArrayList();
             data.addAll(stationList);

@@ -82,16 +82,13 @@ public class DBUserQueries {
             stmt.executeUpdate(query);
             query = "INSERT INTO `Passenger` (`Username`, `Email`) VALUES ('" + username + "', '" + email + "');";
             stmt.executeUpdate(query);
-            query = "INSERT INTO `Breezecard` (`BreezecardNum`, `Value`, `BelongsTo`) VALUES ('" + breezeNum + "', '0', '"
-                    + username + "');";
-            int rInt = stmt.executeUpdate(query);
-            if (rInt == 0) {
-                return false;
-            }
 
-            // If we are here, success! Set this as the current user
+            // Set new user instance
             User currentUser = new User(username, false, email);
             User.setCurrentUser(currentUser);
+            if (!UserCardManagementQueries.addCard(breezeNum)) {
+                return false;
+            }
 
             return true;
         } catch (Exception e) {

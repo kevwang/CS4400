@@ -44,6 +44,17 @@ public class RegistrationController {
 
     @FXML
     private void createClicked() throws IOException {
+        if (user.getText().isEmpty() ||
+            email.getText().isEmpty() ||
+            pass.getText().isEmpty() ||
+            confirmPass.getText().isEmpty() ||
+            //pass.getText().equals(confirmPass.getText()) ||
+            cardNumber.getText().replaceAll("\\s+","").length() != 16) {
+            Alert alert = new Alert(Alert.AlertType.ERROR, "Incorrect parameters!");
+            alert.showAndWait();
+            return;
+        }
+
         if (DBUserQueries.register(user.getText(), email.getText(), pass.getText(),
                 cardNumber.getText().replaceAll("\\s+",""))) {
             ViewManager.changeView(ScreensEnum.ADMIN_WELCOME);
@@ -55,7 +66,6 @@ public class RegistrationController {
 
     @FXML
     private void existingCardSelected() {
-        cardNumber.setEditable(false);
         cardNumber.setText("");
         newCard.setSelected(false);
     }
@@ -63,7 +73,8 @@ public class RegistrationController {
     @FXML
     private void newCardSelected() {
         Random rand = new Random();
-        cardNumber.setEditable(true);cardNumber.setText((1000 + rand.nextInt(9000)) + " " +
+        cardNumber.setEditable(false);
+        cardNumber.setText((1000 + rand.nextInt(9000)) + " " +
                 (1000 + rand.nextInt(9000)) + " " +
                 (1000 + rand.nextInt(9000)) + " " +
                 (1000 + rand.nextInt(9000)) + " ");

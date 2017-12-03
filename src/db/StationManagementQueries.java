@@ -61,6 +61,8 @@ public class StationManagementQueries {
             String stationName, String stopId, String fare, String intersection, Boolean isBusStation, Boolean openStation) {
         try {
             Statement stmt = DatabaseConnection.conn.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
+            String isBusStationString = isBusStation ? "0" : "1";
+            String openStationString = openStation ? "0" : "1";
             String query = "INSERT IGNORE INTO  `Station` (" +
                 "`StopID` ," +
                 "`Name` ," +
@@ -69,7 +71,8 @@ public class StationManagementQueries {
                 "`IsTrain`" +
                 ")" +
                 "VALUES (" +
-                "        'N64',  'tested',  '13.64',  '1',  '1'" +
+                "        '" + stopId + "',  '" + stationName + "',  '" + fare + "',  '" +
+                isBusStationString + " ',  '" + openStationString + "'" +
                 ");";
 
             int result = stmt.executeUpdate(query);
@@ -80,18 +83,20 @@ public class StationManagementQueries {
                 return false;
             }
 
-            query = "INSERT INTO  `BusStationIntersection`(\n" +
-                "`StopID` ,\n" +
-                "`Intersection`\n" +
-                ")\n" +
-                "VALUES (\n" +
-                "        'N64',  '36 St'\n" +
-                ")\n";
+            if (intersection != null) {
+                query = "INSERT INTO  `BusStationIntersection`(\n" +
+                        "`StopID` ,\n" +
+                        "`Intersection`\n" +
+                        ")\n" +
+                        "VALUES (\n" +
+                        "        '" + stopId + "',  '" + intersection + "'\n" +
+                        ")\n";
 
-            result = stmt.executeUpdate(query);
-            System.out.println("Intersection added " + result + " rows");
-            if (result == 0) {
-                return false; // Again, if nothing added here
+                result = stmt.executeUpdate(query);
+                System.out.println("Intersection added " + result + " rows");
+                if (result == 0) {
+                    return false; // Again, if nothing added here
+                }
             }
 
             return true;
@@ -143,8 +148,8 @@ public class StationManagementQueries {
         try {
             // First see if user exists, if so, return false
             Statement stmt = DatabaseConnection.conn.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
-            String query = "UPDATE `cs4400_Group_45`.`Station` SET `EnterFare` = " + value + " WHERE" +
-                "CONVERT( `Station`.`StopID` USING utf8 ) = " + stopId + " LIMIT 1 ;";
+            String query = "UPDATE `cs4400_Group_45`.`Station` SET `EnterFare` = " + value + " WHERE\n" +
+                "CONVERT( `Station`.`StopID` USING utf8 ) = '" + stopId + "' LIMIT 1 ;";
 
             int rs = stmt.executeUpdate(query);
 
@@ -168,8 +173,8 @@ public class StationManagementQueries {
         try {
             Statement stmt = DatabaseConnection.conn.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
             String closedStr = closedStatus ? "1" : "0";
-            String query = "UPDATE  `cs4400_Group_45`.`Station` SET  `ClosedStatus` = " + closedStr + " WHERE" +
-                "CONVERT(  `Station`.`StopID` USING utf8 ) = " + stopId + " LIMIT 1 ;";
+            String query = "UPDATE  `cs4400_Group_45`.`Station` SET  `ClosedStatus` = " + closedStr + " WHERE\n" +
+                "CONVERT(  `Station`.`StopID` USING utf8 ) = '" + stopId + "' LIMIT 1 ;";
 
             int rs = stmt.executeUpdate(query);
 

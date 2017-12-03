@@ -36,7 +36,7 @@ public class AdminStationDetailController {
                     station.getIntersection() != null ?
                             station.getIntersection() : "No intersection");
             openStation.setSelected(
-                    !station.getClosed());
+                    station.getClosed());
         }
     }
 
@@ -55,11 +55,11 @@ public class AdminStationDetailController {
     @FXML
     private void tryToSelectYo() {
         if (StationManagementQueries.setClosedStatus(
-                stopId.getText(), !openStation.isSelected())) {
-            Alert alert = new Alert(Alert.AlertType.INFORMATION, "Fare updated");
+                stopId.getText(), openStation.isSelected())) {
+            Alert alert = new Alert(Alert.AlertType.INFORMATION, "Closed status updated");
             alert.showAndWait();
         } else {
-            Alert alert = new Alert(Alert.AlertType.ERROR, "Error updating fare");
+            Alert alert = new Alert(Alert.AlertType.ERROR, "Error updating closed status");
             alert.showAndWait();
         }
     }

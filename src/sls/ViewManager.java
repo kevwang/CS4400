@@ -95,7 +95,7 @@ public class ViewManager {
                 changeView(ScreensEnum.LOGIN);
                 break;
             case STATION_DETAIL:
-                changeView(ScreensEnum.ADMIN_WELCOME);
+                changeView(ScreensEnum.STATION_MANAGEMENT);
                 break;
             case SUSPENDED_CARDS:
                 changeView(ScreensEnum.ADMIN_WELCOME);
@@ -104,7 +104,7 @@ public class ViewManager {
                 changeView(ScreensEnum.LOGIN);
                 break;
             case CREATE_NEW_STATION:
-                changeView(ScreensEnum.ADMIN_WELCOME);
+                changeView(ScreensEnum.STATION_MANAGEMENT);
                 break;
             case STATION_MANAGEMENT:
                 changeView(ScreensEnum.ADMIN_WELCOME);

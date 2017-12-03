@@ -20,7 +20,7 @@ public class PassengerWelcomeController {
     private Text cardBalance;
 
     @FXML
-    private ComboBox<String> startsAt;
+    private ComboBox<Station> startsAt;
 
     @FXML
     private ComboBox<String> endsAt;
@@ -54,7 +54,7 @@ public class PassengerWelcomeController {
 
         if (startStationList != null) {
             for (Station s : startStationList) {
-                startsAt.getItems().add(s.getName());
+                startsAt.getItems().add(s);
             }
         }
 
@@ -99,7 +99,7 @@ public class PassengerWelcomeController {
         if (!tripInProgress) {
             if (DBUserQueries.startTrip(
                     breezeCards.getValue().getCardNumber(),
-                    startsAt.getValue()
+                    startsAt.getValue().getStopId()
             )) {
                 startTrip.setText("Trip currently in progress");
                 breezeCards.setEditable(false);

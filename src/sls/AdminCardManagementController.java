@@ -35,7 +35,7 @@ public class AdminCardManagementController {
         lowValue.setText("0.0");
         highValue.setText("1000.0");
         owner.setText("sandrapatel");
-        cardNum.setText("2792083965359460");
+        cardNum.setText("2792 0839 6535 9460");
 
         cardNumCol.setCellValueFactory(new PropertyValueFactory<Breezecard, String>("cardNumber"));
         valueCol.setCellValueFactory(new PropertyValueFactory<Breezecard, String>("value"));
@@ -44,11 +44,17 @@ public class AdminCardManagementController {
     }
 
     private void refresh() {
+        if (!validate()) {
+            Alert alert = new Alert(Alert.AlertType.ERROR, "Invalid fields!");
+            alert.showAndWait();
+            return;
+        }
         List<Breezecard> cardsList = CardQueries.getBreezecards(
-                owner.getText(),
-                cardNum.getText(),
-                Double.parseDouble(lowValue.getText()),
-                Double.parseDouble(highValue.getText()),
+                owner.getText().isEmpty() ? null : owner.getText(),
+                cardNum.getText().replaceAll("\\s+","").isEmpty()
+                        ? null : cardNum.getText().replaceAll("\\s+",""),
+                lowValue.getText().isEmpty() ? null : Double.parseDouble(lowValue.getText()),
+                highValue.getText().isEmpty() ? null : Double.parseDouble(highValue.getText()),
                 showSuspended.isSelected()
         );
 
@@ -62,6 +68,11 @@ public class AdminCardManagementController {
 
     @FXML
     private void resetClicked() {
+        lowValue.setText("0.0");
+        highValue.setText("1000.0");
+        owner.setText("");
+        cardNum.setText("");
+
         this.refresh();
     }
 
@@ -94,5 +105,24 @@ public class AdminCardManagementController {
             Alert alert = new Alert(Alert.AlertType.ERROR, "Error updating card");
             alert.showAndWait();
         }
+    }
+
+    /**
+     * Validate the fields
+     * @return
+     */
+    private boolean validate() {
+        try {
+            Double.parseDouble(lowValue.getText());
+            Double.parseDouble(highValue.getText());
+            if (cardNum.getText().replaceAll("\\s+","").length() != 16 &&
+                    !cardNum.getText().isEmpty()) {
+                return false;
+            }
+        } catch (Exception e) {
+            return false;
+        }
+
+        return true;
     }
 }
