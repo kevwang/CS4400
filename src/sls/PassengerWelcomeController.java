@@ -8,6 +8,7 @@ import javafx.scene.control.Hyperlink;
 import javafx.scene.text.Text;
 import models.Breezecard;
 import models.Station;
+import models.Trip;
 
 import java.io.IOException;
 import java.util.List;
@@ -69,14 +70,23 @@ public class PassengerWelcomeController {
         startsAt.getSelectionModel().selectFirst();
         endsAt.getSelectionModel().selectFirst();
 
-        cardBalance.setText(
-                breezeCards.getValue().getValue().toString());
+        breezeCardSelected();
     }
 
     @FXML
     private void breezeCardSelected() {
         cardBalance.setText(
                 breezeCards.getValue().getValue().toString());
+        Trip currTrip = DBUserQueries.getCurrentTrip(
+                breezeCards.getValue().getCardNumber());
+        if (currTrip != null) {
+            startTrip.setText("Trip currently in progress");
+            //startsAt.getSelectionModel().select();
+            tripInProgress = true;
+        } else {
+            startTrip.setText("Start Trip");
+            tripInProgress = false;
+        }
     }
 
     @FXML
@@ -116,10 +126,10 @@ public class PassengerWelcomeController {
     private void endTripClicked() {
         if (tripInProgress) {
             if (DBUserQueries.endTrip(
-                    breezeCards.getValue().getCardNumber(),
-                    endsAt.getValue()
+                    endsAt.getValue(),
+                    breezeCards.getValue().getCardNumber()
             )) {
-                startTrip.setText("Trip currently in progress");
+                startTrip.setText("Start Trip");
                 breezeCards.setEditable(true);
                 startsAt.setEditable(true);
                 tripInProgress = false;

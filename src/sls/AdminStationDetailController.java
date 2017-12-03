@@ -55,7 +55,7 @@ public class AdminStationDetailController {
     @FXML
     private void tryToSelectYo() {
         if (StationManagementQueries.setClosedStatus(
-                stopId.getText(), openStation.isSelected())) {
+                stopId.getText(), !openStation.isSelected())) {
             Alert alert = new Alert(Alert.AlertType.INFORMATION, "Closed status updated");
             alert.showAndWait();
         } else {

@@ -26,8 +26,8 @@ public class CardQueries {
         try {
             // First see if user exists, if so, return false
             Statement stmt = DatabaseConnection.conn.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
-            String query = "UPDATE `cs4400_Group_45`.`Breezecard` SET `Value` = " + value + " WHERE" +
-                "CONVERT( `Breezecard`.`BreezecardNum`USING utf8 ) = " + breezeNum + " LIMIT 1 ;";
+            String query = "UPDATE `cs4400_Group_45`.`Breezecard` SET `Value` = " + value + " WHERE\n" +
+                "CONVERT( `Breezecard`.`BreezecardNum`USING utf8 ) = '" + breezeNum + "' LIMIT 1 ;";
 
             int rs = stmt.executeUpdate(query);
 
@@ -58,20 +58,20 @@ public class CardQueries {
                 "WHERE `BreezecardNum` = " + breezeNum + ";";
 
 
-            int rs = stmt.executeUpdate(query);
+            ResultSet rs = stmt.executeQuery(query);
 
             // If card is in trip, there is problem, else transfer
-            if (rs == 0) {
-                query = "UPDATE `cs4400_Group_45`.`Breezecard` SET `BelongsTo` = " + newOwner + " WHERE" +
-                    "CONVERT( `Breezecard`.`BreezecardNum`USING utf8 ) = " + breezeNum + " LIMIT 1 ;";
-                rs = stmt.executeUpdate(query);
+            if (!rs.next()) {
+                query = "UPDATE `cs4400_Group_45`.`Breezecard` SET `BelongsTo` = '" + newOwner + "' WHERE\n" +
+                    "CONVERT( `Breezecard`.`BreezecardNum`USING utf8 ) = '" + breezeNum + "' LIMIT 1 ;";
+                int r = stmt.executeUpdate(query);
 
-                if (rs == 0) {
+                if (r == 0) {
                     System.out.println("There was a problem transferring the card");
                     return false;
                 }
             } else {
-                System.out.println("There was a problem transfering the card");
+                System.out.println("Card is currently in a trip");
                 return false;
             }
 
@@ -138,6 +138,59 @@ public class CardQueries {
                     "FROM PassengerFlow\n" +
                     "LEFT JOIN Station ON PassengerFlow.StationName = Station.StopID\n" +
                     "ORDER BY COALESCE( Cin, 0 ) DESC";
+            query =
+                "DROP VIEW CusIn;\n" +
+                "CREATE VIEW `CusIn` AS SELECT StartsAt, COUNT( StartsAt ) AS Cin\n" +
+                "FROM Trip\n" +
+                "WHERE StartTime\n" +
+                "BETWEEN  '2017-10-31 22:31:10'\n" +
+                "AND NOW( )\n" +
+                "GROUP BY StartsAt ;\n" +
+
+                "DROP VIEW CusOut;\n" +
+                "CREATE VIEW `CusOut`\n" +
+                "AS SELECT EndsAt, COUNT( EndsAt ) AS Cout\n" +
+                "FROM Trip\n" +
+                "WHERE StartTime\n" +
+                "BETWEEN '2017-10-31 22:31:10'\n" +
+                "AND NOW( )\n" +
+                "GROUP BY EndsAt;\n" +
+
+                "DROP VIEW Revenue;\n" +
+
+                "CREATE VIEW `Revenue`\n" +
+                "AS SELECT StartsAt, SUM( TripFare ) AS Revenue\n" +
+                "FROM Trip\n" +
+                "WHERE StartTime\n" +
+                "BETWEEN '2017-10-31 22:31:10'\n" +
+                "AND NOW( )\n" +
+                "GROUP BY StartsAt;\n" +
+
+                "DROP VIEW StationFilter;\n" +
+                "CREATE VIEW `StationFilter` AS SELECT StartsAt\n" +
+                "FROM Trip\n" +
+                "WHERE StartTime\n" +
+                "BETWEEN '2017-10-31 22:31:10'\n" +
+                "AND NOW( )\n" +
+                "UNION\n" +
+                "SELECT EndsAt\n" +
+                "FROM Trip\n" +
+                "WHERE StartTime\n" +
+                "BETWEEN '2017-10-31 22:31:10'\n" +
+                "AND NOW( ) \n;" +
+
+                "DROP VIEW PassengerFlow;\n" +
+                "CREATE VIEW `PassengerFlow` AS SELECT StationFilter.StartsAt, Cin, Cout, Cin - Cout AS Flow, Revenue\n" +
+                "FROM StationFilter\n" +
+                "LEFT JOIN CusIn ON StationFilter.StartsAt = CusIn.StartsAt\n" +
+                "LEFT JOIN CusOut ON StationFilter.StartsAt = CusOut.EndsAt\n" +
+                "LEFT JOIN Revenue ON StationFilter.StartsAt = Revenue.StartsAt;\n";
+            stmt.executeUpdate(query);
+
+             query = "SELECT StartsAt AS 'Station Name', COALESCE( Cin, 0 ) AS '# Passengers In', COALESCE( Cout, 0 ) AS '# Passengers Out', COALESCE( Cin, 0 ) - COALESCE( Cout, 0 ) AS Flow, COALESCE( Revenue, 0 ) AS Revenue\n"+
+                "FROM PassengerFlow\n" +
+                "LEFT JOIN Station ON PassengerFlow.StartsAt = Station.StopID\n" +
+                "ORDER BY COALESCE( Cin, 0 ) DESC ;";
 
             ResultSet rs = stmt.executeQuery(query);
 
@@ -185,7 +238,7 @@ public class CardQueries {
             } else {
                 sb.append("AND `Value` >= '-1000'\n");
             }
-            if (cardNum != null) { sb.append("AND `BreezecardNum` = '2792083965359460'\n"); }
+            if (cardNum != null) { sb.append("AND `BreezecardNum` = '" + cardNum + "'\n"); }
             if (cardOwner != null) { sb.append("AND `BelongsTo` = '" + cardOwner + "'\n"); }
             if (inclSuspendedCards) {
                 sb.append(

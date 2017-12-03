@@ -88,14 +88,19 @@ public class UserCardManagementQueries {
     public static boolean removeCard(String breezeNum) {
         try {
             Statement stmt = DatabaseConnection.conn.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
-            String query = "DELETE FROM `cs4400_Group_45`.`Conflict`" +
-                    "WHERE `BreezecardNum` = '" + breezeNum + "';";
+            String query = "UPDATE `cs4400_Group_45`.`Breezecard` SET `BelongsTo` = NULL WHERE\n" +
+                "CONVERT( `Breezecard`.`BreezecardNum`USING utf8 ) = '" + breezeNum + "' LIMIT 1 ;";
 
             int rs = stmt.executeUpdate(query);
 
             if (rs == 0) {
                 return false;
             }
+
+            // Also delete from conflict table if it's there
+            query = "DELETE FROM `cs4400_Group_45`.`Conflict`\n" +
+                    "WHERE `BreezecardNum` = '" + breezeNum + "';";
+            stmt.executeUpdate(query);
 
             return true;
         } catch (Exception e) {

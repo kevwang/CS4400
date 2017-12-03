@@ -55,7 +55,7 @@ public class AdminCardManagementController {
                         ? null : cardNum.getText().replaceAll("\\s+",""),
                 lowValue.getText().isEmpty() ? null : Double.parseDouble(lowValue.getText()),
                 highValue.getText().isEmpty() ? null : Double.parseDouble(highValue.getText()),
-                showSuspended.isSelected()
+                !showSuspended.isSelected()
         );
 
         if (cardsList != null && !cardsList.isEmpty()) {

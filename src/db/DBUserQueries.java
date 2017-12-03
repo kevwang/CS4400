@@ -2,6 +2,7 @@ package db;
 
 import models.Breezecard;
 import models.Station;
+import models.Trip;
 import models.User;
 
 import java.sql.ResultSet;
@@ -103,6 +104,41 @@ public class DBUserQueries {
      * @param breezeNum
      * @return
      */
+    public static Trip getCurrentTrip(String breezeNum) {
+        try {
+            // First see if user exists, if so, return false
+            Statement stmt = DatabaseConnection.conn.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
+            String query = "SELECT *" +
+                    "FROM `Trip`" +
+                    "WHERE `BreezecardNum` = " + breezeNum + ";";
+
+            ResultSet rs = stmt.executeQuery(query);
+
+            if (rs.next()) {
+                if (rs.getString("EndsAt") != null) {
+                    return null;
+                } else {
+                    return new Trip(null,
+                            null,
+                            null,
+                            rs.getString("StartsAt"),
+                            rs.getString("EndsAt"));
+                }
+            }
+
+            return null;
+        } catch (Exception e) {
+            System.err.println(e.getMessage());
+        }
+
+        return null;
+    }
+
+    /**
+     * For passenger welcome controller
+     * @param breezeNum
+     * @return
+     */
     public static boolean startTrip(String breezeNum, String stopId) {
         try {
             // First see if user exists, if so, return false
@@ -133,8 +169,8 @@ public class DBUserQueries {
         try {
             // First see if user exists, if so, return false
             Statement stmt = DatabaseConnection.conn.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
-            String query = "UPDATE 'Trip' SET  'EndsAt' = '" + stopId + "' WHERE" +
-                "'Trip'.'EndsAt' IS NULL AND 'Trip'.'BreezecardNum' ='" + breezeNum + "'";
+            String query = "UPDATE `Trip` SET  `EndsAt` = '" + stopId + "' WHERE\n" +
+                "`Trip`.`EndsAt` IS NULL AND `Trip`.`BreezecardNum` ='" + breezeNum + "'";
 
             int rs = stmt.executeUpdate(query);
 
