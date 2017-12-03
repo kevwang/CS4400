@@ -43,7 +43,7 @@ public class CardQueries {
     }
 
     /**
-     * For admin card management controller
+     * For admin card management controller and suspendedcard
      * @param breezeNum
      * @return
      */

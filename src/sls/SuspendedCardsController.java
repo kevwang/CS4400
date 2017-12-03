@@ -44,7 +44,14 @@ public class SuspendedCardsController {
     @FXML
     private void newOwnerClicked() throws IOException {
         try {
-
+            SuspendedCard sc = table.getSelectionModel().getSelectedItem();
+            if (CardQueries.transferCard(
+                    sc.getBreezecardNumber(), sc.getNewOwner())) {
+                this.refresh();
+            } else {
+                Alert alert = new Alert(Alert.AlertType.ERROR, "Error transfering card");
+                alert.showAndWait();
+            }
         } catch (Exception e) {
             System.err.println(e.getMessage());
             Alert alert = new Alert(Alert.AlertType.ERROR, "No row selected");
@@ -55,6 +62,19 @@ public class SuspendedCardsController {
 
     @FXML
     private void prevOwnerClicked() throws IOException {
-
+        try {
+            SuspendedCard sc = table.getSelectionModel().getSelectedItem();
+            if (CardQueries.transferCard(
+                    sc.getBreezecardNumber(), sc.getPreviousOwner())) {
+                this.refresh();
+            } else {
+                Alert alert = new Alert(Alert.AlertType.ERROR, "Error transfering card");
+                alert.showAndWait();
+            }
+        } catch (Exception e) {
+            System.err.println(e.getMessage());
+            Alert alert = new Alert(Alert.AlertType.ERROR, "No row selected");
+            alert.showAndWait();
+        }
     }
 }

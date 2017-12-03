@@ -135,4 +135,54 @@ public class StationManagementQueries {
 
         return null;
     }
+
+    /**
+     * For admin station detail controller
+     */
+    public static boolean setFare(String stopId, Double value) {
+        try {
+            // First see if user exists, if so, return false
+            Statement stmt = DatabaseConnection.conn.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
+            String query = "UPDATE `cs4400_Group_45`.`Station` SET `EnterFare` = " + value + " WHERE" +
+                "CONVERT( `Station`.`StopID` USING utf8 ) = " + stopId + " LIMIT 1 ;";
+
+            int rs = stmt.executeUpdate(query);
+
+            if (rs == 0) {
+                return false;
+            }
+
+            System.out.println(stopId + " successfully updated");
+            return true;
+        } catch (Exception e) {
+            System.err.println(e.getMessage());
+        }
+
+        return false;
+    }
+
+    /**
+     * For admin station detail controller
+     */
+    public static boolean setClosedStatus(String stopId, boolean closedStatus) {
+        try {
+            Statement stmt = DatabaseConnection.conn.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
+            String closedStr = closedStatus ? "1" : "0";
+            String query = "UPDATE  `cs4400_Group_45`.`Station` SET  `ClosedStatus` = " + closedStr + " WHERE" +
+                "CONVERT(  `Station`.`StopID` USING utf8 ) = " + stopId + " LIMIT 1 ;";
+
+            int rs = stmt.executeUpdate(query);
+
+            if (rs == 0) {
+                return false;
+            }
+
+            System.out.println(stopId + " successfully updated");
+            return true;
+        } catch (Exception e) {
+            System.err.println(e.getMessage());
+        }
+
+        return false;
+    }
 }

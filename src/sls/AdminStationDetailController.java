@@ -2,6 +2,7 @@ package sls;
 
 import db.StationManagementQueries;
 import javafx.fxml.FXML;
+import javafx.scene.control.Alert;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.Hyperlink;
 import javafx.scene.control.TextField;
@@ -41,13 +42,26 @@ public class AdminStationDetailController {
 
     @FXML
     private void updateFareClicked() {
-
+        if (StationManagementQueries.setFare(
+                stopId.getText(), Double.parseDouble(fare.getText()))) {
+            Alert alert = new Alert(Alert.AlertType.INFORMATION, "Fare updated");
+            alert.showAndWait();
+        } else {
+            Alert alert = new Alert(Alert.AlertType.ERROR, "Error updating fare");
+            alert.showAndWait();
+        }
     }
 
     @FXML
     private void tryToSelectYo() {
-        openStation.setSelected(
-                !openStation.isSelected());
+        if (StationManagementQueries.setClosedStatus(
+                stopId.getText(), !openStation.isSelected())) {
+            Alert alert = new Alert(Alert.AlertType.INFORMATION, "Fare updated");
+            alert.showAndWait();
+        } else {
+            Alert alert = new Alert(Alert.AlertType.ERROR, "Error updating fare");
+            alert.showAndWait();
+        }
     }
 
     public static String getMsStopId() {
