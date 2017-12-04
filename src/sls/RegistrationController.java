@@ -61,34 +61,36 @@ public class RegistrationController {
             return;
         }
 
+        Random rand = new Random();
+        while (UserCardManagementQueries.doesCardExist(cardNumber.getText().replaceAll("\\s+",""))) {
+            cardNumber.setText((1000 + rand.nextInt(9000)) + " " +
+                    (1000 + rand.nextInt(9000)) + " " +
+                    (1000 + rand.nextInt(9000)) + " " +
+                    (1000 + rand.nextInt(9000)) + " ");
+        }
+
         if (DBUserQueries.register(user.getText(), email.getText(), pass.getText(),
                 cardNumber.getText().replaceAll("\\s+",""))) {
 
             // Check if the created card is now suspended
             List<SuspendedCard> susCards = CardQueries.getSuspendedCards();
             List<Breezecard> brCards = UserCardManagementQueries.getCards();
-            /*for (SuspendedCard susCard : susCards) {
-                for (Breezecard brCard : brCards) {
-                    if (susCard.getBreezecardNumber().equals(brCard.getCardNumber())) {
-                        Random rand = new Random();
-                        cardNumber.setText((1000 + rand.nextInt(9000)) + " " +
-                                (1000 + rand.nextInt(9000)) + " " +
-                                (1000 + rand.nextInt(9000)) + " " +
-                                (1000 + rand.nextInt(9000)) + " ");
-                        UserCardManagementQueries.addCard(cardNumber.getText());
 
-                        Alert alert = new Alert(Alert.AlertType.INFORMATION,
-                                "That card is suspended. New card created toO");
-                        alert.showAndWait();
-                    }
-                }
-            }*/
+            // If a suspended card was made..
             if (brCards.isEmpty()) {
-                Random rand = new Random();
+                rand = new Random();
                 cardNumber.setText((1000 + rand.nextInt(9000)) + " " +
                         (1000 + rand.nextInt(9000)) + " " +
                         (1000 + rand.nextInt(9000)) + " " +
                         (1000 + rand.nextInt(9000)) + " ");
+
+                while (UserCardManagementQueries.doesCardExist(cardNumber.getText().replaceAll("\\s+",""))) {
+                    cardNumber.setText((1000 + rand.nextInt(9000)) + " " +
+                            (1000 + rand.nextInt(9000)) + " " +
+                            (1000 + rand.nextInt(9000)) + " " +
+                            (1000 + rand.nextInt(9000)) + " ");
+                }
+
                 UserCardManagementQueries.addCard(
                         cardNumber.getText().replaceAll("\\s+",""));
                 Alert alert = new Alert(Alert.AlertType.INFORMATION,

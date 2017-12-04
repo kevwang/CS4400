@@ -46,7 +46,7 @@ public class UserCardManagementQueries {
                     }
                 } else {
                     System.out.println("Breezecard found with no owner, updating");
-                    query = "UPDATE `cs4400_Group_45`.`Breezecard` SET `BelongsTo` ='" + currentUser.getUsername() + "' WHERE" +
+                    query = "UPDATE `cs4400_Group_45`.`Breezecard` SET `BelongsTo` ='" + currentUser.getUsername() + "' WHERE\n" +
                         "CONVERT( `Breezecard`.`BreezecardNum`USING utf8 ) = '" + breezeNum + "' LIMIT 1 ;";
                     int susInt = stmt.executeUpdate(query);
 
@@ -165,5 +165,26 @@ public class UserCardManagementQueries {
         }
 
         return null;
+    }
+
+    /**
+     * For manage cards controller
+     * @return
+     */
+    public static boolean doesCardExist(String cardNum) {
+        try {
+            Statement stmt = DatabaseConnection.conn.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
+            String query = "SELECT  `BreezecardNum`\n" +
+                    "FROM  `Breezecard`\n" +
+                    "WHERE  `BreezecardNum` = '" + cardNum + "';";
+
+            ResultSet rs = stmt.executeQuery(query);
+
+            return rs.next();
+        } catch (Exception e) {
+            System.err.println(e.getMessage());
+        }
+
+        return false;
     }
 }
