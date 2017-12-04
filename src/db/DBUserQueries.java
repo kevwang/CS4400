@@ -254,7 +254,7 @@ public class DBUserQueries {
                         rs.getString("Name"),
                         rs.getDouble("EnterFare"),
                         false,
-                        (rs.getInt("IsTrain") == 0 ? false : true)
+                        (rs.getInt("IsTrain") != 0)
                 ));
             }
 
@@ -286,7 +286,7 @@ public class DBUserQueries {
                         rs.getString("Name"),
                         rs.getDouble("EnterFare"),
                         false,
-                        true
+                        rs.getInt("IsTrain") != 0
                 ));
             }
 
