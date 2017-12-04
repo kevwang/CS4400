@@ -37,7 +37,7 @@ public class DBUserQueries {
                 // Set an email if it's an admin
                 if (isAdminResult == 0) {
                     stmt = DatabaseConnection.conn.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
-                    String emailQuery = "SELECT Email FROM Passenger WHERE Username = 'sandrapatel'";
+                    String emailQuery = "SELECT Email FROM Passenger WHERE Username = '" + username + "'";
                     rs = stmt.executeQuery(emailQuery);
                     rs.next(); // There should def be here.. key constraints will support
                     emailAddress = rs.getString("Email");
