@@ -225,8 +225,6 @@ public class CardQueries {
             return flows;
         } catch (Exception e) {
             System.err.println(e.getMessage());
-            Alert alert = new Alert(Alert.AlertType.ERROR, "Incorrect parameters!");
-            alert.showAndWait();
         }
 
         return null;

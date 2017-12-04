@@ -4,6 +4,7 @@ import db.CardQueries;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.scene.control.Alert;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
@@ -49,12 +50,15 @@ public class FlowReportController {
                     startTime.getText().isEmpty() ? null : new SimpleDateFormat("yyyy-MM-dd hh:mm:ss").parse(startTime.getText()),
                     endTime.getText().isEmpty() ? null : new SimpleDateFormat("yyyy-MM-dd hh:mm:ss").parse(endTime.getText()));
 
-            //if (flows != null && !flows.isEmpty()) {
+            if (flows != null) {
                 final ObservableList<StationFlow> data = FXCollections.observableArrayList();
                 data.addAll(flows);
 
                 table.setItems(data);
-            //}
+            } else {
+                Alert alert = new Alert(Alert.AlertType.ERROR, "Incorrect parameters!");
+                alert.showAndWait();
+            }
         } catch (ParseException p) {
             System.err.println(p.getMessage());
         }
