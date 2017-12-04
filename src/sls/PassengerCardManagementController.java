@@ -90,7 +90,8 @@ public class PassengerCardManagementController {
         try {
             Double v = Double.parseDouble(valueToAdd.getText());
             if (v < 0.0 || v > 1000.0 ||
-                    creditCardNum.getText().replaceAll("\\s+","").length() != 16) {
+                    creditCardNum.getText().replaceAll("\\s+","").length() != 16 ||
+                    v + table.getSelectionModel().getSelectedItem().getValue() > 1000) {
                 Alert alert = new Alert(Alert.AlertType.ERROR, "Bad value");
                 alert.showAndWait();
                 return;

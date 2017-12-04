@@ -110,7 +110,9 @@ public class DBUserQueries {
             Statement stmt = DatabaseConnection.conn.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
             String query = "SELECT *" +
                     "FROM `Trip`" +
-                    "WHERE `BreezecardNum` = " + breezeNum + ";";
+                    "WHERE `BreezecardNum` = " + breezeNum + "\n" +
+                    "ORDER BY StartTime DESC" +
+                    ";";
 
             ResultSet rs = stmt.executeQuery(query);
 
@@ -151,6 +153,16 @@ public class DBUserQueries {
             if (rs == 0) {
                 return false;
             }
+
+            query = "UPDATE CardValue\n" +
+                "SET Value=Value-EnterFare\n" +
+                "WHERE EndsAt IS NULL AND BreezecardNum= '" + breezeNum + "';";
+            rs = stmt.executeUpdate(query);
+
+            if (rs == 0) {
+                return false;
+            }
+
 
             return true;
         } catch (Exception e) {

@@ -24,7 +24,7 @@ public class PassengerWelcomeController {
     private ComboBox<Station> startsAt;
 
     @FXML
-    private ComboBox<String> endsAt;
+    private ComboBox<Station> endsAt;
 
     @FXML
     private Hyperlink startTrip;
@@ -61,7 +61,7 @@ public class PassengerWelcomeController {
 
         if (endStationList != null) {
             for (Station s : endStationList) {
-                endsAt.getItems().add(s.getName());
+                endsAt.getItems().add(s);
             }
         }
 
@@ -107,13 +107,17 @@ public class PassengerWelcomeController {
     @FXML
     private void startTripClicked() {
         if (!tripInProgress) {
+            if (Double.parseDouble(cardBalance.getText()) < startsAt.getValue().getFare()) {
+                Alert alert = new Alert(Alert.AlertType.ERROR, "Card balance too low");
+                alert.showAndWait();
+                return;
+            }
+
             if (DBUserQueries.startTrip(
                     breezeCards.getValue().getCardNumber(),
                     startsAt.getValue().getStopId()
             )) {
                 startTrip.setText("Trip currently in progress");
-                breezeCards.setEditable(false);
-                startsAt.setEditable(false);
                 tripInProgress = true;
             } else {
                 Alert alert = new Alert(Alert.AlertType.ERROR, "Error starting trip");
@@ -126,12 +130,10 @@ public class PassengerWelcomeController {
     private void endTripClicked() {
         if (tripInProgress) {
             if (DBUserQueries.endTrip(
-                    endsAt.getValue(),
+                    endsAt.getValue().getStopId(),
                     breezeCards.getValue().getCardNumber()
             )) {
                 startTrip.setText("Start Trip");
-                breezeCards.setEditable(true);
-                startsAt.setEditable(true);
                 tripInProgress = false;
             } else {
                 Alert alert = new Alert(Alert.AlertType.ERROR, "Error ending trip");
