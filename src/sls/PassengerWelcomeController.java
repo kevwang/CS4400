@@ -127,6 +127,24 @@ public class PassengerWelcomeController {
                 Alert alert = new Alert(Alert.AlertType.ERROR, "Error starting trip");
                 alert.showAndWait();
             }
+
+            if (endStationList != null) {
+                endsAt.getItems().removeAll();
+
+                if (startsAt.getValue().getTrain()) {
+                    for (Station s : endStationList) {
+                        if (s.getTrain()) {
+                            endsAt.getItems().add(s);
+                        }
+                    }
+                } else {
+                    for (Station s : endStationList) {
+                        if (!s.getTrain()) {
+                            endsAt.getItems().add(s);
+                        }
+                    }
+                }
+            }
         }
     }
 
