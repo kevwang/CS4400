@@ -4,10 +4,7 @@ import db.CardQueries;
 import db.DBUserQueries;
 import db.UserCardManagementQueries;
 import javafx.fxml.FXML;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Button;
-import javafx.scene.control.RadioButton;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import models.Breezecard;
 import models.SuspendedCard;
 
@@ -15,6 +12,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
+import java.util.regex.Pattern;
 
 public class RegistrationController {
     @FXML
@@ -24,10 +22,10 @@ public class RegistrationController {
     private TextField email;
 
     @FXML
-    private TextField pass;
+    private PasswordField pass;
 
     @FXML
-    private TextField confirmPass;
+    private PasswordField confirmPass;
 
     @FXML
     private RadioButton existingCard;
@@ -54,7 +52,9 @@ public class RegistrationController {
             email.getText().isEmpty() ||
             pass.getText().isEmpty() ||
             confirmPass.getText().isEmpty() ||
-            //pass.getText().equals(confirmPass.getText()) ||
+            !rfc2822.matcher(email.getText()).matches() ||
+            pass.getLength() < 8 ||
+            !pass.getText().equals(confirmPass.getText()) ||
             cardNumber.getText().replaceAll("\\s+","").length() != 16) {
             Alert alert = new Alert(Alert.AlertType.ERROR, "Incorrect parameters!");
             alert.showAndWait();
@@ -102,6 +102,10 @@ public class RegistrationController {
             alert.showAndWait();
         }
     }
+
+    private static final Pattern rfc2822 = Pattern.compile(
+            "^[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?$"
+    );
 
     @FXML
     private void existingCardSelected() {

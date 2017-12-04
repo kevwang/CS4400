@@ -67,6 +67,11 @@ public class PassengerCardManagementController {
 
     @FXML
     private void addCardSelected() {
+        if (breezeCardNum.getText().replaceAll("\\s+","").length() != 16) {
+            Alert alert = new Alert(Alert.AlertType.ERROR, "Bad value");
+            alert.showAndWait();
+            return;
+        }
         if (UserCardManagementQueries.addCard(
                 breezeCardNum.getText().replaceAll("\\s+","")
         )) {
@@ -84,13 +89,16 @@ public class PassengerCardManagementController {
     private void addValueSelected() {
         try {
             Double v = Double.parseDouble(valueToAdd.getText());
-            if (v < 0.0 || v > 1000.0) {
+            if (v < 0.0 || v > 1000.0 ||
+                    creditCardNum.getText().replaceAll("\\s+","").length() != 16) {
                 Alert alert = new Alert(Alert.AlertType.ERROR, "Bad value");
                 alert.showAndWait();
+                return;
             }
         } catch (Exception e) {
             Alert alert = new Alert(Alert.AlertType.ERROR, "Bad value");
             alert.showAndWait();
+            return;
         }
 
         if (UserCardManagementQueries.addValue(

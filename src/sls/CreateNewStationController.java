@@ -51,7 +51,7 @@ public class CreateNewStationController {
                 !stopId.getText().isEmpty() &&
                 !fare.getText().isEmpty()) {
                 Double fareDouble = Double.parseDouble(fare.getText());
-                if (fareDouble < 0.0 || fareDouble > 1000.0) {
+                if (fareDouble < 0.0 || fareDouble > 50.0) {
                     return false;
                 }
                 return true;

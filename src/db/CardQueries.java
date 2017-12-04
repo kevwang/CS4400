@@ -141,7 +141,7 @@ public class CardQueries {
                     "FROM PassengerFlow\n" +
                     "LEFT JOIN Station ON PassengerFlow.StationName = Station.StopID\n" +
                     "ORDER BY COALESCE( Cin, 0 ) DESC";
-            query =
+            /*query =
                 "DROP VIEW CusIn;\n" +
                 "CREATE VIEW `CusIn` AS SELECT StartsAt, COUNT( StartsAt ) AS Cin\n" +
                 "FROM Trip\n" +
@@ -188,7 +188,7 @@ public class CardQueries {
                 "LEFT JOIN CusIn ON StationFilter.StartsAt = CusIn.StartsAt\n" +
                 "LEFT JOIN CusOut ON StationFilter.StartsAt = CusOut.EndsAt\n" +
                 "LEFT JOIN Revenue ON StationFilter.StartsAt = Revenue.StartsAt;\n";
-            stmt.executeUpdate(query);
+            stmt.executeUpdate(query);*/
 
              query = "SELECT StartsAt AS 'Station Name', COALESCE( Cin, 0 ) AS '# Passengers In', COALESCE( Cout, 0 ) AS '# Passengers Out', COALESCE( Cin, 0 ) - COALESCE( Cout, 0 ) AS Flow, COALESCE( Revenue, 0 ) AS Revenue\n"+
                 "FROM PassengerFlow\n" +
