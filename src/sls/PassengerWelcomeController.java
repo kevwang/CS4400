@@ -115,8 +115,12 @@ public class PassengerWelcomeController {
 
             if (DBUserQueries.startTrip(
                     breezeCards.getValue().getCardNumber(),
-                    startsAt.getValue().getStopId()
+                    startsAt.getValue().getStopId(),
+                    startsAt.getValue().getFare()
             )) {
+                breezeCards.getValue().setValue(
+                        breezeCards.getValue().getValue() - startsAt.getValue().getFare());
+                breezeCardSelected();
                 startTrip.setText("Trip currently in progress");
                 tripInProgress = true;
             } else {

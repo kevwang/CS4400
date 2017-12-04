@@ -141,12 +141,12 @@ public class DBUserQueries {
      * @param breezeNum
      * @return
      */
-    public static boolean startTrip(String breezeNum, String stopId) {
+    public static boolean startTrip(String breezeNum, String stopId, Double fare) {
         try {
             // First see if user exists, if so, return false
             Statement stmt = DatabaseConnection.conn.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
             String query = "INSERT INTO `Trip` (`Tripfare`, `StartTime`, `BreezecardNum`, `StartsAt`, `EndsAt`)" +
-                "VALUES ('" + 5 + "', NOW(), '"+ breezeNum + "', '" + stopId + "', NULL);";
+                "VALUES ('" + fare + "', NOW(), '"+ breezeNum + "', '" + stopId + "', NULL);";
 
             int rs = stmt.executeUpdate(query);
 
