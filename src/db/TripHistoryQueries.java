@@ -1,5 +1,6 @@
 package db;
 
+import javafx.scene.control.Alert;
 import models.Breezecard;
 import models.Trip;
 import models.User;
@@ -72,6 +73,8 @@ public class TripHistoryQueries {
             return trips;
         } catch (Exception e) {
             System.err.println(e.getMessage());
+            Alert alert = new Alert(Alert.AlertType.ERROR, "Incorrect parameters!");
+            alert.showAndWait();
         }
 
         return null;
