@@ -243,7 +243,7 @@ public class DBUserQueries {
             Statement stmt = DatabaseConnection.conn.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
             String query = "SELECT StopID, Name, EnterFare, IsTrain\n" +
                 "FROM Station\n" +
-                "WHERE ClosedStatus =0;";
+                "WHERE ClosedStatus =0 ORDER BY Name ASC;";
             ResultSet rs = stmt.executeQuery(query);
 
             // Take the resultset and add into breezecard list

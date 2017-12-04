@@ -55,7 +55,8 @@ public class RegistrationController {
             !rfc2822.matcher(email.getText()).matches() ||
             pass.getLength() < 8 ||
             !pass.getText().equals(confirmPass.getText()) ||
-            cardNumber.getText().replaceAll("\\s+","").length() != 16) {
+            cardNumber.getText().replaceAll("\\s+","").length() != 16 ||
+            this.isDigits(cardNumber.getText())) {
             Alert alert = new Alert(Alert.AlertType.ERROR, "Incorrect parameters!");
             alert.showAndWait();
             return;
@@ -103,6 +104,16 @@ public class RegistrationController {
             Alert alert = new Alert(Alert.AlertType.ERROR, "There was a problem making your account");
             alert.showAndWait();
         }
+    }
+
+    private boolean isDigits(String num) {
+        try {
+            Integer.parseInt(num.replaceAll("\\s+",""));
+        } catch (Exception e) {
+            return false;
+        }
+
+        return true;
     }
 
     private static final Pattern rfc2822 = Pattern.compile(

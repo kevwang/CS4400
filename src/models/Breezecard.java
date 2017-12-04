@@ -8,6 +8,8 @@ public class Breezecard {
     private String cardNumber;
     private Double value;
     private String user;
+    private boolean isSuspended;
+    private String suspendedString;
 
     /**
      * New instance of breezecard
@@ -53,5 +55,21 @@ public class Breezecard {
 
     public void setUser(String user) {
         this.user = user;
+    }
+
+    public boolean isSuspended() {
+        return isSuspended;
+    }
+
+    public void setSuspended(boolean suspended) {
+        isSuspended = suspended;
+    }
+
+    public String getSuspendedString() {
+        return suspendedString;
+    }
+
+    public void setSuspendedString(String suspendedString) {
+        this.suspendedString = suspendedString;
     }
 }

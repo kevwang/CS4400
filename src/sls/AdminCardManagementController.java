@@ -60,6 +60,16 @@ public class AdminCardManagementController {
                 !showSuspended.isSelected()
         );
 
+        suspendedCards = CardQueries.getSuspendedCards();
+        for (Breezecard bc : cardsList) {
+            for (SuspendedCard sc : suspendedCards) {
+                if (bc.getCardNumber().equals(sc.getBreezecardNumber())) {
+                    bc.setSuspended(true);
+                    bc.setUser("Suspended");
+                }
+            }
+        }
+
         //if (cardsList != null && !cardsList.isEmpty()) {
             final ObservableList<Breezecard> data = FXCollections.observableArrayList();
             data.addAll(cardsList);
