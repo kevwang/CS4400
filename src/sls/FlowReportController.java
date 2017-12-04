@@ -61,6 +61,8 @@ public class FlowReportController {
             }
         } catch (ParseException p) {
             System.err.println(p.getMessage());
+            Alert alert = new Alert(Alert.AlertType.ERROR, "Incorrect parameters!");
+            alert.showAndWait();
         }
     }
 
