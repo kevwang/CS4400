@@ -28,7 +28,7 @@ public class StationManagementQueries {
                     "ELSE \"Open\"\n" +
                     "END\n" +
                     ") AS 'Status'\n" +
-                    "FROM `Station`;";
+                    "FROM `Station` ORDER BY `Station Name` ASC;";
 
             ResultSet rs = stmt.executeQuery(query);
 

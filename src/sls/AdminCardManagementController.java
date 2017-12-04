@@ -60,12 +60,12 @@ public class AdminCardManagementController {
                 !showSuspended.isSelected()
         );
 
-        if (cardsList != null && !cardsList.isEmpty()) {
+        //if (cardsList != null && !cardsList.isEmpty()) {
             final ObservableList<Breezecard> data = FXCollections.observableArrayList();
             data.addAll(cardsList);
 
             table.setItems(data);
-        }
+        //}
     }
 
     @FXML
