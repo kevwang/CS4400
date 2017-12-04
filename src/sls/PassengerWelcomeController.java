@@ -44,7 +44,7 @@ public class PassengerWelcomeController {
     private void initialize() {
         breezecardList = DBUserQueries.getUserBreezecards();
         startStationList = DBUserQueries.getStartingStations();
-        endStationList = DBUserQueries.getEndingStations();
+        endStationList = DBUserQueries.getStartingStations();
 
         // Populate lists from query
         if (breezecardList != null) {
@@ -128,8 +128,9 @@ public class PassengerWelcomeController {
                 alert.showAndWait();
             }
 
+            // Update ends at stations
             if (endStationList != null) {
-                endsAt.getItems().removeAll();
+                endsAt.getItems().clear();
 
                 if (startsAt.getValue().getTrain()) {
                     for (Station s : endStationList) {
@@ -144,6 +145,7 @@ public class PassengerWelcomeController {
                         }
                     }
                 }
+                endsAt.getSelectionModel().selectFirst();
             }
         }
     }
