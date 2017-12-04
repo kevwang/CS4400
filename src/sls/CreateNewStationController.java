@@ -28,6 +28,7 @@ public class CreateNewStationController {
         if (!validate()) {
             Alert alert = new Alert(Alert.AlertType.ERROR, "Error in your parameters");
             alert.showAndWait();
+            return;
         }
         if (StationManagementQueries.createNewStation(
                 stationName.getText(),
