@@ -132,7 +132,7 @@ public class CardQueries {
         try {
             String endString = end == null ? "NOW()" : "'" +
                     new SimpleDateFormat("yyyy-MM-dd hh:mm:ss").format(end) + "'";
-            String startString = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss").format(start);
+            String startString = start == null ? "1900-01-01 01:01:01" : new SimpleDateFormat("yyyy-MM-dd hh:mm:ss").format(start);
 
             Statement stmt = DatabaseConnection.conn.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
             String query =
@@ -190,10 +190,21 @@ public class CardQueries {
                 "LEFT JOIN Revenue ON StationFilter.StartsAt = Revenue.StartsAt;\n";
             stmt.executeUpdate(query);*/
 
-             query = "SELECT StartsAt AS 'Station Name', COALESCE( Cin, 0 ) AS '# Passengers In', COALESCE( Cout, 0 ) AS '# Passengers Out', COALESCE( Cin, 0 ) - COALESCE( Cout, 0 ) AS Flow, COALESCE( Revenue, 0 ) AS Revenue\n"+
-                "FROM PassengerFlow\n" +
-                "LEFT JOIN Station ON PassengerFlow.StartsAt = Station.StopID\n" +
-                "ORDER BY COALESCE( Cin, 0 ) DESC ;";
+             query = "SELECT StartsAt AS 'Station Name', COALESCE( Cin, 0 ) AS '# Passengers In', COALESCE( Cout, 0 ) AS '# Passengers Out', \n" +
+                     "COALESCE( Cin, 0 ) - COALESCE( Cout, 0 ) AS Flow, COALESCE( Revenue, 0 ) AS Revenue\n" +
+                "FROM (\n" +
+                "SELECT DISTINCT (\n" +
+                "PF.StartsAt\n" +
+                "), Cin, Cout, Flow, Revenue\n" +
+                "FROM PassengerFlow AS PF\n" +
+                "RIGHT JOIN Start AS S ON PF.StartsAt = S.StartsAt\n" +
+                "WHERE StartTime\n" +
+                "BETWEEN '" + startString + "'\n" +
+                "AND " + endString + "\n" +
+                ") AS PF2\n" +
+                "LEFT JOIN Station ON PF2.StartsAt = Station.StopID\n" +
+                "ORDER BY StartsAt ASC\n";
+
 
             ResultSet rs = stmt.executeQuery(query);
 

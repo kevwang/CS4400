@@ -26,7 +26,7 @@ public class TripHistoryQueries {
         try {
             String endString = end == null ? "NOW()" : "'" +
                     new SimpleDateFormat("yyyy-MM-dd hh:mm:ss").format(end) + "'";
-            String startString = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss").format(start);
+            String startString = start == null ? "1900-01-01 01:01:01" :new SimpleDateFormat("yyyy-MM-dd hh:mm:ss").format(start);
 
             User currentUser = User.getCurrentUser();
             Statement stmt = DatabaseConnection.conn.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);

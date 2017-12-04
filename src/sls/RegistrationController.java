@@ -56,7 +56,7 @@ public class RegistrationController {
             pass.getLength() < 8 ||
             !pass.getText().equals(confirmPass.getText()) ||
             cardNumber.getText().replaceAll("\\s+","").length() != 16 ||
-            this.isDigits(cardNumber.getText())) {
+            !this.isDigits(cardNumber.getText())) {
             Alert alert = new Alert(Alert.AlertType.ERROR, "Incorrect parameters!");
             alert.showAndWait();
             return;
@@ -123,6 +123,7 @@ public class RegistrationController {
     @FXML
     private void existingCardSelected() {
         cardNumber.setText("");
+        cardNumber.setEditable(true);
         newCard.setSelected(false);
     }
 

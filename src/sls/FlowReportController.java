@@ -49,12 +49,12 @@ public class FlowReportController {
                     startTime.getText().isEmpty() ? null : new SimpleDateFormat("yyyy-MM-dd hh:mm:ss").parse(startTime.getText()),
                     endTime.getText().isEmpty() ? null : new SimpleDateFormat("yyyy-MM-dd hh:mm:ss").parse(endTime.getText()));
 
-            if (flows != null && !flows.isEmpty()) {
+            //if (flows != null && !flows.isEmpty()) {
                 final ObservableList<StationFlow> data = FXCollections.observableArrayList();
                 data.addAll(flows);
 
                 table.setItems(data);
-            }
+            //}
         } catch (ParseException p) {
             System.err.println(p.getMessage());
         }
@@ -68,6 +68,7 @@ public class FlowReportController {
     @FXML
     private void resetClicked() {
         startTime.setText("2017-10-02 13:11:11");
+        endTime.setText("");
         this.refresh();
     }
 }
